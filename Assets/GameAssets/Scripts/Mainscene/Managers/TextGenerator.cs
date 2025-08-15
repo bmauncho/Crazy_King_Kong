@@ -1,0 +1,149 @@
+using UnityEngine;
+using TMPro;
+using System.Collections.Generic;
+public static class TextGenerator
+{
+    /// <summary>
+    /// Creates a TextMeshPro-compatible string using sprite asset glyphs.
+    /// </summary>
+    /// <param name="input">Input string to convert.</param>
+    /// <param name="Prefix">Base prefix for lowercase glyphs (e.g., "Font_main_").</param>
+    /// <param name="Prefix_UpperCase">Uppercase identifier (e.g., "Uc_").</param>
+    /// <param name="text">TMP_Text component to apply output.</param>
+    /// <param name="spriteAsset">Sprite asset containing glyphs.</param>
+    /// <param name="charReferences">Custom character replacements, if any.</param>
+    public static void CreateSpriteAssetText (
+          string input ,
+          string Prefix ,
+          string Prefix_UpperCase ,
+          TMP_Text text ,
+          TMP_SpriteAsset spriteAsset ,
+          List<(string actual, string available)> charReferences = null )
+    {
+        string spriteCode = "<sprite name=";
+        string prefix = spriteCode + Prefix;
+        string suffix = ">";
+        string result = string.Empty;
+        List<int> spaceIndex = new List<int>();
+        List<(string character, bool isUpperCase)> characters = new List<(string character, bool isUpperCase)>();
+
+        foreach (char k in input)
+        {
+            if (char.IsUpper(k))
+            {
+                characters.Add((k.ToString(), true));
+            }
+            else if (char.IsLower(k))
+            {
+                characters.Add((k.ToString(), false));
+            }
+            else
+            {
+                characters.Add((k.ToString(), false));
+            }
+        }
+
+        //Debug.Log(input);
+
+        foreach (var (character, isUpperCase) in characters)
+        {
+            if (character != null)
+            {
+                string spriteName = null;
+
+                if (character == " ")
+                {
+                    result += " ";
+                    continue;
+                }
+
+                bool wasCustomReplaced = false;
+
+                if (charReferences != null)
+                {
+                    foreach (var (actual, available) in charReferences)
+                    {
+                        if (actual == character)
+                        {
+                            result += prefix + available + suffix;
+                            wasCustomReplaced = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (wasCustomReplaced)
+                    continue;
+
+                string finalPrefix = isUpperCase ? prefix + Prefix_UpperCase : prefix;
+
+                if (spriteAsset.GetSpriteIndexFromName(finalPrefix + character) < 0)
+                {
+                    result += finalPrefix + character + suffix;
+                }
+                else
+                {
+                    result += character;
+                    Debug.Log("result " + result);
+                }
+            }
+        }
+
+        text.spriteAsset = spriteAsset;
+        text.text = result;
+    }
+
+    public static void CreateSpriteAssetTextNumbers (
+       string input ,
+       string prefix ,
+       TMP_Text text ,
+       TMP_SpriteAsset spriteAsset ,
+       List<(string actual, string available)> charReferences = null )
+    {
+        string spriteCode = "<sprite name=";
+        string suffix = ">";
+        string result = string.Empty;
+
+        foreach (char c in input)
+        {
+            // Keep spaces as normal spaces
+            if (c == ' ')
+            {
+                result += " ";
+                continue;
+            }
+
+            // Custom replacements
+            bool replaced = false;
+            if (charReferences != null)
+            {
+                foreach (var (actual, available) in charReferences)
+                {
+                    if (actual == c.ToString())
+                    {
+                        result += spriteCode + available + suffix;
+                        replaced = true;
+                        break;
+                    }
+                }
+            }
+            if (replaced) continue;
+
+            string spriteName = prefix + c;
+            int spriteIndex = spriteAsset.GetSpriteIndexFromName(spriteName);
+
+            if (spriteIndex >= 0)
+            {
+                result += spriteCode + spriteName + suffix;
+            }
+            else
+            {
+                // Fallback to normal text if sprite not found
+                result += c;
+            }
+        }
+
+        text.spriteAsset = spriteAsset;
+        text.text = result;
+    }
+}
