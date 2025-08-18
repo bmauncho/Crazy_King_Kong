@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.TextCore.Text;
 public static class TextGenerator
 {
     /// <summary>
@@ -94,26 +95,25 @@ public static class TextGenerator
     }
 
     public static void CreateSpriteAssetTextNumbers (
-       string input ,
-       string prefix ,
-       TMP_Text text ,
-       TMP_SpriteAsset spriteAsset ,
-       List<(string actual, string available)> charReferences = null )
+         string input ,
+         string prefix ,
+         TMP_Text text ,
+         TMP_SpriteAsset spriteAsset ,
+         List<(string actual, string available)> charReferences = null )
     {
-        string spriteCode = "<sprite name=";
-        string suffix = ">";
+        text.spriteAsset = spriteAsset;
+        string spriteCode = "<sprite name=\"";
+        string suffix = "\">";
         string result = string.Empty;
 
         foreach (char c in input)
         {
-            // Keep spaces as normal spaces
             if (c == ' ')
             {
                 result += " ";
                 continue;
             }
 
-            // Custom replacements
             bool replaced = false;
             if (charReferences != null)
             {
@@ -121,7 +121,7 @@ public static class TextGenerator
                 {
                     if (actual == c.ToString())
                     {
-                        result += spriteCode + available + suffix;
+                        result += spriteCode + prefix +available + suffix;
                         replaced = true;
                         break;
                     }
@@ -130,20 +130,24 @@ public static class TextGenerator
             if (replaced) continue;
 
             string spriteName = prefix + c;
-            int spriteIndex = spriteAsset.GetSpriteIndexFromName(spriteName);
+            Debug.Log($"Checking sprite: {spriteName}");
 
-            if (spriteIndex >= 0)
+            int spriteIndex = spriteAsset.GetSpriteIndexFromName(spriteName);
+            Debug.Log($"Trying sprite: {spriteName} (Index: {spriteIndex})");
+
+            if (spriteIndex < 0)
             {
                 result += spriteCode + spriteName + suffix;
             }
             else
             {
-                // Fallback to normal text if sprite not found
-                result += c;
+                result += c; // fallback
             }
         }
 
-        text.spriteAsset = spriteAsset;
         text.text = result;
+
+        Debug.Log("Final result: " + result);
     }
+
 }

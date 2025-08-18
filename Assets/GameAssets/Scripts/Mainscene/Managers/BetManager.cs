@@ -1,14 +1,17 @@
+using System.Globalization;
 using UnityEngine;
 
 public class BetManager : MonoBehaviour
 {
+    TextManager textManager_;
     private string [] BetAmounts = { "0.5", "1" , "2" , "4" , "5" , "10" , "20" ,"25", "50" , "100" };
     public int betIndex = 3;
     public string betAmount = "";
-
+    public BetAmount betAmountUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start ()
     {
+        textManager_ = CommandCenter.Instance.textManager_;
         refresh();
     }
 
@@ -21,44 +24,36 @@ public class BetManager : MonoBehaviour
     void refresh ()
     {
         betAmount = BetAmounts [betIndex];
+        textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
     }
 
-    public void IncreaseBetAmount_click ()
+    [ContextMenu("Increase Bet Amount")]
+    public void IncreaseBetAmount ()
     {
         if (betIndex < BetAmounts.Length - 1)
         {
             betIndex++;
             betAmount = BetAmounts [betIndex];
+            betAmountUI.Bet_Amount.text = betAmount; // Update the UI text with the new bet amount
+            betAmount = NumberFormatter.FormatBetAmount(betAmount,1);
+
+            textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
         }
     }
-
-    public void DecreaseBetAmount_Click ()
+    [ContextMenu("Decrease Bet Amount")]
+    public void DecreaseBetAmount ()
     {
         if (betIndex > 0)
         {
             betIndex--;
             betAmount = BetAmounts [betIndex];
+            betAmountUI.Bet_Amount.text = betAmount; // Update the UI text with the new bet amount
+
+            betAmount = NumberFormatter.FormatBetAmount(betAmount, 1);
+
+            textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
         }
     }
-
-    public void IncreaseBetAmount_Hold ()
-    {
-        if (betIndex < BetAmounts.Length - 1)
-        {
-            betIndex++;
-            betAmount = BetAmounts [betIndex];
-        }
-    }
-
-    public void DecreaseBetAmount_Hold ()
-    {
-        if (betIndex > 0)
-        {
-            betIndex--;
-            betAmount = BetAmounts [betIndex];
-        }
-    }
-
     public string GetBetAmount ()
     {
         return betAmount;

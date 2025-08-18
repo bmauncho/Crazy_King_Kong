@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public enum TextType
 {
@@ -20,6 +21,12 @@ public class TextInfo
 public class TextManager : MonoBehaviour
 {
     public TextInfo[] textInfo;
+    public List<(string actual, string available)> charRefrences = new List<(string actual, string available)>
+    {
+        (".","fullstop"),
+        (",", "comma")
+    };
+
     private void RefreshNumbersText (
         string Input,
         string prefix,
@@ -49,7 +56,7 @@ public class TextManager : MonoBehaviour
         return null;
     }
 
-    public void refreshBetText ( string Input,TMP_Text text , List<(string actual, string available)> charRefrences = null )
+    public void refreshBetText ( string Input,TMP_Text text )
     {
         TextInfo info = TextInfo(TextType.BetText);
         if(info != null)
@@ -59,12 +66,12 @@ public class TextManager : MonoBehaviour
                 info.prefix ,
                 text ,
                 info.spriteAsset ,
-                info.charRefrences
+                charRefrences
             );
         }
     }
 
-    public void refreshWinText ( string Input , TMP_Text text , List<(string actual, string available)> charRefrences = null )
+    public void refreshWinText ( string Input , TMP_Text text )
     {
         TextInfo info = TextInfo(TextType.WinText);
         if (info != null)
@@ -74,8 +81,17 @@ public class TextManager : MonoBehaviour
                 info.prefix ,
                 text ,
                 info.spriteAsset ,
-                info.charRefrences
+                charRefrences
             );
         }
+    }
+
+    [ContextMenu("Test")]
+    public void Test ()
+    {
+        TextInfo info = TextInfo(TextType.BetText);
+        int index = info.spriteAsset.GetSpriteIndexFromName("UI_Bet1_FNT_4");
+        Debug.Log("Index test: " + index);
+
     }
 }
