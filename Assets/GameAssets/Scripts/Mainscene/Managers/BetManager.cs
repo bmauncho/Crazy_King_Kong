@@ -35,7 +35,7 @@ public class BetManager : MonoBehaviour
             betIndex++;
             betAmount = BetAmounts [betIndex];
             betAmountUI.Bet_Amount.text = betAmount; // Update the UI text with the new bet amount
-            betAmount = NumberFormatter.FormatBetAmount(betAmount,1);
+            betAmount = NumberFormatter.FormatString(betAmount,1);
 
             textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
         }
@@ -49,7 +49,7 @@ public class BetManager : MonoBehaviour
             betAmount = BetAmounts [betIndex];
             betAmountUI.Bet_Amount.text = betAmount; // Update the UI text with the new bet amount
 
-            betAmount = NumberFormatter.FormatBetAmount(betAmount, 1);
+            betAmount = NumberFormatter.FormatString(betAmount, 1);
 
             textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
         }

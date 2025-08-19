@@ -7,6 +7,7 @@ public enum TextType
 {
     WinText,
     BetText,
+    WalletText,
 }
 
 [System.Serializable]
@@ -74,6 +75,21 @@ public class TextManager : MonoBehaviour
     public void refreshWinText ( string Input , TMP_Text text )
     {
         TextInfo info = TextInfo(TextType.WinText);
+        if (info != null)
+        {
+            RefreshNumbersText(
+                Input ,
+                info.prefix ,
+                text ,
+                info.spriteAsset ,
+                charRefrences
+            );
+        }
+    }
+
+    public void refreshWalletText ( string Input , TMP_Text text )
+    {
+        TextInfo info = TextInfo(TextType.WalletText);
         if (info != null)
         {
             RefreshNumbersText(

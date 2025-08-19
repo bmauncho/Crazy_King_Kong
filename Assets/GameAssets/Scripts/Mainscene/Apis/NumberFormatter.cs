@@ -3,7 +3,7 @@ using System.Globalization;
 
 public static class NumberFormatter
 {
-    public static string FormatBetAmount ( string input ,int decimalplaces)
+    public static string FormatString ( string input ,int decimalplaces)
     {
         if (double.TryParse(input , NumberStyles.Any , CultureInfo.InvariantCulture , out double value))
         {

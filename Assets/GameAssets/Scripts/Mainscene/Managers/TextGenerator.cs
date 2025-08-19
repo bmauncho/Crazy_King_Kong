@@ -130,10 +130,8 @@ public static class TextGenerator
             if (replaced) continue;
 
             string spriteName = prefix + c;
-            Debug.Log($"Checking sprite: {spriteName}");
 
             int spriteIndex = spriteAsset.GetSpriteIndexFromName(spriteName);
-            Debug.Log($"Trying sprite: {spriteName} (Index: {spriteIndex})");
 
             if (spriteIndex < 0)
             {
@@ -146,8 +144,6 @@ public static class TextGenerator
         }
 
         text.text = result;
-
-        Debug.Log("Final result: " + result);
     }
 
 }

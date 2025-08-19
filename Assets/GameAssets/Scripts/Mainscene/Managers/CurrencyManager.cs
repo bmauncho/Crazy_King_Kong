@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
+    TextManager textManager_;
     public UserInfo UserInfo;
     public double CashAmount;
     public double winAmount;
@@ -14,12 +15,15 @@ public class CurrencyManager : MonoBehaviour
     void Start()
     {
         walletAmountText = UserInfo.walletAmount;
+        textManager_= CommandCenter.Instance.textManager_;
         if (CommandCenter.Instance)
         {
             if (CommandCenter.Instance.gameMode == GameMode.Demo)
             {
                 CashAmount = 2000;
-                walletAmountText.text = CashAmount.ToString("N2" , CultureInfo.CurrentCulture); ;
+                string CASHAMOUNT = CashAmount.ToString();
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+                textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
             else
             {
@@ -29,7 +33,9 @@ public class CurrencyManager : MonoBehaviour
                     CashAmount += amount;
                 }
 
-                walletAmountText.text = CashAmount.ToString("N2" , CultureInfo.CurrentCulture); ;
+                string CASHAMOUNT = CashAmount.ToString();
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+                textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
         }
     }
@@ -68,7 +74,9 @@ public class CurrencyManager : MonoBehaviour
         {
             //PlaceBet
         }
-        walletAmountText.text = CashAmount.ToString("N2" , CultureInfo.CurrentCulture);
+        string CASHAMOUNT = CashAmount.ToString();
+        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+        textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
         yield return null;
     }
 
@@ -84,7 +92,9 @@ public class CurrencyManager : MonoBehaviour
             }
         }
 
-        walletAmountText.text = CashAmount.ToString("N2" , CultureInfo.CurrentCulture);
+        string CASHAMOUNT = CashAmount.ToString();
+        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+        textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
     }
 
     public void updateCashOutWinings ()
@@ -94,7 +104,9 @@ public class CurrencyManager : MonoBehaviour
         {
             CashAmount = winnings;
         }
-        walletAmountText.text = CashAmount.ToString("N2" , CultureInfo.CurrentCulture);
+        string CASHAMOUNT = CashAmount.ToString();
+        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+        textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
     }
 
     public bool IsMoneyDepleted ()
