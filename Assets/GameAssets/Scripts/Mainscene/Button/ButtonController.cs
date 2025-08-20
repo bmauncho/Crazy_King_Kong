@@ -4,30 +4,51 @@ using UnityEngine.Events;
 using DG.Tweening;
 using UnityEngine.UI;
 
-
 public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public  bool isPointerDown = false;
+    [Header("Settings")]
+    public bool isToggle;
     public bool isPersistentGlow;
     public bool isInteractable = true;
-    private bool lastInteractableValue;
 
+    [SerializeField] private bool toggledOn = false;
+
+    [Header("Sprites")]
     public Sprite baseSprite;
     public Sprite normalsprite;
+    public Sprite toggledSprite;
+    public Sprite toggleGlowSprite;
 
+    [Header("Button Objects")]
     public GameObject ButtonNormal;
     public GameObject ButtonGlow;
 
+    [Header("Events")]
     public UnityEvent onClick;
 
     private Image buttonNormalImage;
+    private Image buttonGlowImage;
+
+    private Sprite normalGlow;
+    private bool isPointerDown = false;
+    private bool lastInteractableValue;
 
     private void Awake ()
     {
         if (ButtonNormal != null)
             buttonNormalImage = ButtonNormal.GetComponent<Image>();
+        else
+            Debug.LogWarning("ButtonNormal GameObject not assigned.");
 
-        HandleInteractableChanged(isInteractable); // Initialize visuals
+        if (ButtonGlow != null)
+            buttonGlowImage = ButtonGlow.GetComponent<Image>();
+        else
+            Debug.LogWarning("ButtonGlow GameObject not assigned.");
+
+        if (buttonGlowImage != null)
+            normalGlow = buttonGlowImage.sprite;
+
+        HandleInteractableChanged(isInteractable);
     }
 
     private void Update ()
@@ -41,74 +62,97 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     public void OnPointerDown ( PointerEventData eventData )
     {
-        if(!isInteractable)
-        {
-            return; // Ignore pointer down if not interactable
-        }
+        if (!isInteractable) return;
         isPointerDown = true;
-        if(ButtonGlow != null)
-        {
-            if(isPersistentGlow)
-            {
-                if(ButtonGlow.activeSelf)
-                {
-                    ButtonGlow.SetActive(false);
-                    ButtonNormal.SetActive(true);
-                }
-                else
-                {
-                    ButtonGlow.SetActive(true);
-                    ButtonNormal.SetActive(false);
-                }
-            }
-            else
-            {
-                ButtonGlow.SetActive(true);
-                ButtonNormal.SetActive(false);
-            }
-               
-        }
+
+        if (isToggle)
+            HandleTogglePointerDown();
+        else
+            HandleNormalPointerDown();
     }
 
     public void OnPointerUp ( PointerEventData eventData )
     {
-        if (!isInteractable)
+        if (!isInteractable) return;
+
+        if (isToggle)
         {
-            return; // Ignore pointer up if not interactable
+            toggledOn = !toggledOn;
+            UpdateToggleVisuals();
         }
-        if (ButtonGlow != null)
+        else if (!isPersistentGlow)
         {
-            if (!isPersistentGlow)
-            {
-                ButtonGlow.SetActive(false);
-                ButtonNormal.SetActive(true);
-            }
+            ButtonGlow?.SetActive(false);
+            ButtonNormal?.SetActive(true);
         }
+
         onClick?.Invoke();
         isPointerDown = false;
     }
+
+    private void HandleTogglePointerDown ()
+    {
+        if (isPersistentGlow) return;
+
+        if (buttonGlowImage != null)
+            buttonGlowImage.sprite = toggledOn ? toggleGlowSprite : normalGlow;
+
+        ButtonGlow?.SetActive(true);
+        ButtonNormal?.SetActive(false);
+
+        // Optional: animate glow (requires DOTween)
+         ButtonGlow.transform.DOScale(Vector3.one * 1.1f, 0.15f).SetEase(Ease.OutBack);
+    }
+
+    private void HandleNormalPointerDown ()
+    {
+        if (ButtonGlow == null || ButtonNormal == null) return;
+
+        if (isPersistentGlow)
+        {
+            bool newState = !ButtonGlow.activeSelf;
+            ButtonGlow.SetActive(newState);
+            ButtonNormal.SetActive(!newState);
+        }
+        else
+        {
+            ButtonGlow.SetActive(true);
+            ButtonNormal.SetActive(false);
+        }
+
+        // Optional: animate glow
+         ButtonGlow.transform.DOScale(Vector3.one * 1.1f, 0.15f).SetEase(Ease.OutBack);
+    }
+
     private void HandleInteractableChanged ( bool newValue )
     {
         if (buttonNormalImage != null)
-        {
             buttonNormalImage.sprite = newValue ? normalsprite : baseSprite;
-        }
 
-        if (ButtonGlow != null)
-        {
-            ButtonGlow.SetActive(false);
-        }
+        ButtonGlow?.SetActive(false);
+        ButtonNormal?.SetActive(true);
     }
 
-    [ContextMenu("Test - 0ff")]
-    public void InteractableOff ()
+    private void UpdateToggleVisuals ()
     {
-        isInteractable = false;
+        if (buttonNormalImage != null)
+            buttonNormalImage.sprite = toggledOn ? toggledSprite : normalsprite;
+
+        ButtonGlow?.SetActive(false);
+        ButtonNormal?.SetActive(true);
     }
 
-    [ContextMenu("Test - On")]
-    public void InteractableOn ()
+    public bool IsToggledOn => toggledOn;
+
+    public void SetToggleState ( bool value )
     {
-        isInteractable = true;
+        toggledOn = value;
+        UpdateToggleVisuals();
     }
+
+    [ContextMenu("Test - Interactable Off")]
+    public void InteractableOff () => isInteractable = false;
+
+    [ContextMenu("Test - Interactable On")]
+    public void InteractableOn () => isInteractable = true;
 }
