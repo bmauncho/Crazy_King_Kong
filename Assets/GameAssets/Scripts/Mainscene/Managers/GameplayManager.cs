@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameplayManager : MonoBehaviour
 {
     public SettingsUI settingUi;
+    public GameRules gameRules;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,5 +24,10 @@ public class GameplayManager : MonoBehaviour
     public void ToggleSettings ()
     {
         settingUi.ToggleSettings();
+    }
+
+    public void ToggleGameRules ()
+    {
+        gameRules.toggleGameRules();
     }
 }

@@ -54,6 +54,7 @@ public class SettingsUI : MonoBehaviour
         }
     }
 
+
     private IEnumerator OpenSettings ( Action OnComplete = null )
     {
         settingsTween = SettingsBtns.DOAnchorPosY(0 , duration).SetEase(Ease.OutBack);
@@ -87,4 +88,5 @@ public class SettingsUI : MonoBehaviour
         gamePlayTween = null;
         OnComplete?.Invoke();
     }
+
 }
