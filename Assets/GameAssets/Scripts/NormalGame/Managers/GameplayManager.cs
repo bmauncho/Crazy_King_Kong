@@ -21,6 +21,12 @@ public class GameplayManager : MonoBehaviour
         Debug.Log("Spin button clicked!");
     }
 
+    public void skip()
+    {
+        CommandCenter.Instance.boulderManager_.SkipBoulder();
+        Debug.Log("Skip button clicked!");
+    }
+
     public void ToggleSettings ()
     {
         settingUi.ToggleSettings();

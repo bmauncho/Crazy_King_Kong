@@ -84,8 +84,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3953741289938331239}
+  - component: {fileID: 321993854153847927}
   m_Layer: 5
-  m_Name: Ball
+  m_Name: Boulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,3 +112,16 @@ RectTransform:
   m_AnchoredPosition: {x: 83.2, y: -36.9}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &321993854153847927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7998637384985666873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9645227d85c3c714881dbb097569f1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boulderType: 0

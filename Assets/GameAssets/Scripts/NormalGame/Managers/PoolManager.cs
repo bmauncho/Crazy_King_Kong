@@ -3,9 +3,7 @@ using UnityEngine;
 
 public enum PoolType
 {
-    Cards,
-    Gems,
-    Fx,
+    Boulder,
 }
 
 [System.Serializable]

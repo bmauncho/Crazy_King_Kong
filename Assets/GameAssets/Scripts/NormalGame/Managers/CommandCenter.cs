@@ -14,6 +14,8 @@ public class CommandCenter : MonoBehaviour
     public CurrencyManager currencyManager_;
     public BetManager betManager_;
     public GameplayManager gamePlayManager_;
+    public BoulderManager boulderManager_;
+
     private void Awake ()
     {
         if (Instance != null && Instance != this)
