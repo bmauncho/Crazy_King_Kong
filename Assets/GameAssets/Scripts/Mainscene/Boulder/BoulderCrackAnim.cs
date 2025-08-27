@@ -1,15 +1,7 @@
 using UnityEngine;
 
-public enum BoulderType
+public class BoulderCrackAnim : MonoBehaviour
 {
-    Rock,
-    Lava,
-    Ice,
-    Gold,
-}
-public class Boulder : MonoBehaviour
-{
-    public BoulderType boulderType;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,10 +12,5 @@ public class Boulder : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void SetBoulderType ( BoulderType type )
-    {
-        boulderType = type;
     }
 }
