@@ -22,6 +22,7 @@ public class BoulderManager : MonoBehaviour
     PoolManager poolMan_;
     [Header("settings")]
     public SmashBoulder smash;
+    public KongAnim kongAnim;
     public SkipBoulder skip;
     public SmashPosition smashPos;
     public Boulders boulders;

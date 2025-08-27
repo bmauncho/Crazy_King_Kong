@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum KongAnimType
@@ -17,48 +18,47 @@ public class KongAnimation
     public KongAnimType type;
     public Animator anim;
 }
+
 public class KongAnim : MonoBehaviour
 {
     public KongAnimType currentAimType;
     public KongAnimation [] KongAnimations;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("Repeat Config")]
+    public int maxRepeat = 2;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private int lastWinIndex = -1;
+    private int winRepeatCount = 0;
+
+    private int lastLoseIndex = -1;
+    private int loseRepeatCount = 0;
+
+    private KongAnimType [] winTypes = { KongAnimType.WinBoth , KongAnimType.WinSingle };
+    private KongAnimType [] loseTypes = { KongAnimType.ThumpBoth , KongAnimType.ThumpSingle };
+
 
     public IEnumerator PlayKongAnim ( KongAnimType type )
     {
-        // Prevent re-playing the current animation type
         if (currentAimType == type)
             yield break;
 
-        // Try to get the animation data for the requested type
         var anim = GetKongAnim(type);
 
-        // Enable only the selected animation, disable the others
         foreach (var kAnim in KongAnimations)
         {
             bool isActive = ( kAnim.type == type );
             kAnim.anim.gameObject.SetActive(isActive);
         }
 
-        // Set the current type only if the anim is valid
         if (anim?.anim != null)
         {
             currentAimType = type;
         }
 
-
+        SmashEvent smashEvent = anim.anim.GetComponent<SmashEvent>();
+        yield return new WaitUntil(() => anim.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && smashEvent.IsComplete);
+        smashEvent.IsComplete = false;
     }
-
 
     public KongAnimation GetKongAnim ( KongAnimType type )
     {
@@ -68,5 +68,62 @@ public class KongAnim : MonoBehaviour
                 return anim;
         }
         return null;
+    }
+
+    public void playwinAnim ()
+    {
+        int index = GetNonRepeatingIndex(winTypes.Length , ref lastWinIndex , ref winRepeatCount);
+        KongAnimType winType = winTypes [index];
+        StartCoroutine(PlayKongAnim(winType));
+    }
+
+    public void playLoseAnim ()
+    {
+        int index = GetNonRepeatingIndex(loseTypes.Length , ref lastLoseIndex , ref loseRepeatCount);
+        KongAnimType loseType = loseTypes [index];
+        StartCoroutine(PlayKongAnim(loseType));
+    }
+
+    public void playNormalAnim ()
+    {
+        StartCoroutine(PlayKongAnim(KongAnimType.Idle));
+    }
+
+    private int GetNonRepeatingIndex ( int count , ref int lastIndex , ref int repeatCount )
+    {
+        int index;
+
+        if (lastIndex == -1)
+        {
+            index = Random.Range(0 , count);
+            repeatCount = 1;
+        }
+        else
+        {
+            List<int> possibleIndices = new List<int>();
+
+            if (repeatCount >= maxRepeat)
+            {
+                for (int i = 0 ; i < count ; i++)
+                {
+                    if (i != lastIndex)
+                        possibleIndices.Add(i);
+                }
+            }
+            else
+            {
+                for (int i = 0 ; i < count ; i++)
+                {
+                    possibleIndices.Add(i);
+                }
+            }
+
+            index = possibleIndices [Random.Range(0 , possibleIndices.Count)];
+
+            repeatCount = ( index == lastIndex ) ? repeatCount + 1 : 1;
+        }
+
+        lastIndex = index;
+        return index;
     }
 }

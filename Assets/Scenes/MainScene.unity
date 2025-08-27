@@ -3600,6 +3600,7 @@ GameObject:
   - component: {fileID: 613428173}
   - component: {fileID: 613428172}
   - component: {fileID: 613428174}
+  - component: {fileID: 613428175}
   m_Layer: 5
   m_Name: ThumpSingle
   m_TagString: Untagged
@@ -3686,6 +3687,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &613428175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613428170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d11c0c004976d488f0c002285e35b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &619271484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7819,6 +7832,7 @@ GameObject:
   - component: {fileID: 1434071493}
   - component: {fileID: 1434071492}
   - component: {fileID: 1434071494}
+  - component: {fileID: 1434071495}
   m_Layer: 5
   m_Name: ThumpBoth
   m_TagString: Untagged
@@ -7905,6 +7919,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1434071495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434071490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d11c0c004976d488f0c002285e35b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1464091909
 GameObject:
   m_ObjectHideFlags: 0
@@ -8949,6 +8975,7 @@ GameObject:
   - component: {fileID: 1654858956}
   - component: {fileID: 1654858955}
   - component: {fileID: 1654858957}
+  - component: {fileID: 1654858958}
   m_Layer: 5
   m_Name: WinSingle
   m_TagString: Untagged
@@ -9035,6 +9062,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1654858958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654858953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d11c0c004976d488f0c002285e35b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1676120199
 GameObject:
   m_ObjectHideFlags: 0
@@ -10172,6 +10211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smash: {fileID: 6463171465488498472}
+  kongAnim: {fileID: 375827541}
   skip: {fileID: 1214814156}
   smashPos: {fileID: 1678508707}
   boulders: {fileID: 788807403}
@@ -10226,13 +10266,14 @@ GameObject:
   - component: {fileID: 1891724925}
   - component: {fileID: 1891724924}
   - component: {fileID: 1891724926}
+  - component: {fileID: 1891724927}
   m_Layer: 5
   m_Name: WinBoth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1891724923
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10312,6 +10353,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1891724927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891724922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d11c0c004976d488f0c002285e35b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1900837748
 GameObject:
   m_ObjectHideFlags: 0
