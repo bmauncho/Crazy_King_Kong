@@ -1,16 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoulderCrackAnim : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int crackLevel = 0;
+    public Image crack;
+    public Sprite [] cracks;
+
+    public void ShowCrack ()
     {
-        
+        crack.gameObject.SetActive(true);
+        var sr = crack.GetComponent<Image>();
+        if (sr != null)
+        {
+            sr.sprite = cracks [crackLevel];
+            crackLevel++;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetCrack ()
     {
-        
+        crackLevel = 0;
+        crack.gameObject.SetActive(false);
     }
 }

@@ -30,6 +30,8 @@ public class BoulderManager : MonoBehaviour
     public BoulderSelection selection;
     public bool IsSkip = false;
 
+    public GameObject Boulder;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -63,6 +65,8 @@ public class BoulderManager : MonoBehaviour
 
                     boulder.GetComponent<Boulder>().SetBoulderType(selection.GetRandomBoulderTypeConfig().type);
                     boulder.GetComponent<Boulder>().SetBoulderSprite(selection.GetRandomBoulderTypeConfig().boulder);
+
+                    Boulder = boulder;
 
                 }
             }

@@ -87,13 +87,14 @@ GameObject:
   - component: {fileID: 5672777961930762991}
   - component: {fileID: 2321787009663134250}
   - component: {fileID: 765093494902053691}
+  - component: {fileID: 4709070149838662262}
   m_Layer: 5
   m_Name: boulderCrackAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &482185829156306785
 RectTransform:
   m_ObjectHideFlags: 0
@@ -165,6 +166,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &4709070149838662262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5957513834572406687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d18cad2285d9ba4ea3e90212d259aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crackLevel: 0
+  crack: {fileID: 6084039825551717324}
+  cracks:
+  - {fileID: 21300000, guid: 653b8e89762972e42882fb0232a56d05, type: 3}
+  - {fileID: 21300000, guid: cbab016fbd7aab6499ca2a3c1b20a344, type: 3}
+  - {fileID: 21300000, guid: 697828245c97644439a07171ea3f10c7, type: 3}
+  - {fileID: 21300000, guid: 0f0a7d95f6c6e3e449b2f13feacc956d, type: 3}
+  - {fileID: 21300000, guid: 4b9cc7e36fe9f3747b4e8d49488b3a6e, type: 3}
+  - {fileID: 21300000, guid: 5b6686701995f4b4b8d85c327b2df540, type: 3}
+  - {fileID: 21300000, guid: 266588f3797144940b2f6a1eabc58f25, type: 3}
+  - {fileID: 21300000, guid: b956c6d55485b4448a5ae08f616eb087, type: 3}
+  - {fileID: 21300000, guid: 079c1dcba5b691541936594f4b4d44d8, type: 3}
+  - {fileID: 21300000, guid: 40ee1605a4981914d99d52f985d33ca1, type: 3}
+  - {fileID: 21300000, guid: afbf2bc31088bcc4bba4f4077c433e43, type: 3}
+  - {fileID: 21300000, guid: a31d479fc642ecd4dbd39b47f6c69aa2, type: 3}
+  - {fileID: 21300000, guid: ae529bb4179ae85479ae56f6f2c8b615, type: 3}
+  - {fileID: 21300000, guid: cbd55e132a2e47240a04fcceec18aac8, type: 3}
+  - {fileID: 21300000, guid: a9f5d655d49fdd7499c7a50ae25252be, type: 3}
 --- !u!1 &7179584471525988288
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5282126159593244152
 RectTransform:
   m_ObjectHideFlags: 0
@@ -292,3 +323,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boulderType: 0
   boulderImg: {fileID: 845879320075884973}
+  crackAnim: {fileID: 4709070149838662262}

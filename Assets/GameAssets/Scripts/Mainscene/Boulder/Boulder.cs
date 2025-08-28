@@ -5,6 +5,7 @@ public class Boulder : MonoBehaviour
 {
     public BoulderType boulderType;
     public Image boulderImg;
+    public BoulderCrackAnim crackAnim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,5 +26,15 @@ public class Boulder : MonoBehaviour
     public void SetBoulderSprite ( Sprite sprite )
     {
         boulderImg.sprite = sprite;
+    }
+
+    public void crack ()
+    {
+        crackAnim.ShowCrack();
+    }
+
+    public void resetCrack ()
+    {
+        crackAnim.ResetCrack();
     }
 }

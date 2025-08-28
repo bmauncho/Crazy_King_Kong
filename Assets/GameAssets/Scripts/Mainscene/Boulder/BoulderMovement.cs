@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class BoulderMovement : MonoBehaviour
 {
+    BoulderManager boulderMan;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        boulderMan = CommandCenter.Instance.boulderManager_;
     }
 
     public IEnumerator ShiftBouldersSmoothly (
@@ -42,6 +43,7 @@ public class BoulderMovement : MonoBehaviour
             owner.GetComponent<RectTransform>().sizeDelta = finalSize;
             smashPos.AddOwner(owner);
 
+            boulderMan.Boulder = owner;
         }
 
         // 2. Shift owners from top to bottom
