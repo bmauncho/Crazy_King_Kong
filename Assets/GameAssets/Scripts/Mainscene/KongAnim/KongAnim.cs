@@ -56,8 +56,11 @@ public class KongAnim : MonoBehaviour
         }
 
         SmashEvent smashEvent = anim.anim.GetComponent<SmashEvent>();
-        yield return new WaitUntil(() => anim.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && smashEvent.IsComplete);
-        smashEvent.IsComplete = false;
+        if (smashEvent != null)
+        {
+            yield return new WaitUntil(() => anim.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && smashEvent.IsComplete);
+            smashEvent.IsComplete = false;
+        }
     }
 
     public KongAnimation GetKongAnim ( KongAnimType type )

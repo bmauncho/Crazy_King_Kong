@@ -29,7 +29,7 @@ public class BoulderMovement : MonoBehaviour
         {
             var owner = last.TheOwner;
             last.RemoveOwner();
-            Vector2 finalSize = new Vector2(100f,82f);
+            Vector2 finalSize = new Vector2(90f,90f);
             Sequence seq = DOTween.Sequence();
 
             seq.Append(owner.transform.DOMove(smashPosition.position , moveDuration)

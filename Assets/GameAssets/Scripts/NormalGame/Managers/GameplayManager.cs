@@ -19,6 +19,7 @@ public class GameplayManager : MonoBehaviour
     public void spin ()
     {
         Debug.Log("Spin button clicked!");
+        CommandCenter.Instance.boulderManager_.SmashBoulder();
     }
 
     public void skip()

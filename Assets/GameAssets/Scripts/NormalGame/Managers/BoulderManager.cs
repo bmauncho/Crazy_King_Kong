@@ -74,7 +74,7 @@ public class BoulderManager : MonoBehaviour
             smashPos.transform);
 
         smashBoulder.transform.localPosition = Vector3.zero;
-        smashBoulder.GetComponent<RectTransform>().sizeDelta = new Vector2(100 , 82);
+        smashBoulder.GetComponent<RectTransform>().sizeDelta = new Vector2(90f, 90f);
 
         smashPos.AddOwner(smashBoulder);
     }
