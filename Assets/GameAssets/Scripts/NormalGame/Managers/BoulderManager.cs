@@ -66,8 +66,6 @@ public class BoulderManager : MonoBehaviour
                     boulder.GetComponent<Boulder>().SetBoulderType(selection.GetRandomBoulderTypeConfig().type);
                     boulder.GetComponent<Boulder>().SetBoulderSprite(selection.GetRandomBoulderTypeConfig().boulder);
 
-                    Boulder = boulder;
-
                 }
             }
         }
@@ -81,6 +79,7 @@ public class BoulderManager : MonoBehaviour
         smashBoulder.GetComponent<RectTransform>().sizeDelta = new Vector2(90f, 90f);
 
         smashPos.AddOwner(smashBoulder);
+        Boulder = smashBoulder;
     }
 
     public void SmashBoulder ()
@@ -93,5 +92,12 @@ public class BoulderManager : MonoBehaviour
         if(IsSkip) return;
         IsSkip = true;
         StartCoroutine(skip.skip_Boulder());
+    }
+
+    public void returnBoulderToPool ()
+    {
+        Boulder boulder = Boulder.GetComponent<Boulder>();
+        boulder.resetCrack();
+        poolMan_.ReturnToPool(PoolType.Boulder , Boulder);
     }
 }
