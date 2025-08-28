@@ -6,11 +6,13 @@ public class SkipBoulder : MonoBehaviour
 {
     BoulderManager boulderMan;
     PoolManager poolMan_;
+    GameplayManager gameplayMan_;
 
     private void Start ()
     {
         boulderMan = CommandCenter.Instance.boulderManager_;
         poolMan_ = CommandCenter.Instance.poolManager_;
+        gameplayMan_ = CommandCenter.Instance.gamePlayManager_;
     }
     public IEnumerator skip_Boulder ()
     {
@@ -19,6 +21,7 @@ public class SkipBoulder : MonoBehaviour
         {
             boulderMan.IsSkip = false;
             Debug.Log("Skip IsDone");
+            gameplayMan_.DisableSkip();
         }));
 
         yield return null;

@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28631846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28631847}
+  - component: {fileID: 28631848}
+  m_Layer: 5
+  m_Name: SmashPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &28631847
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28631846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1298441012}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 150, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &28631848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28631846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970f60b682c0b4f46a4aa4ddfe734715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TheOwner: {fileID: 0}
 --- !u!1 &31862270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,6 +2078,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingUi: {fileID: 31862272}
   gameRules: {fileID: 1644168001}
+  canWin: 0
+  canSpin: 0
+  canSkip: 0
+  canAutoSpin: 0
 --- !u!1 &269515144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2840,6 +2893,7 @@ MonoBehaviour:
     type: 4
     anim: {fileID: 1654858957}
   maxRepeat: 2
+  IsAnimating: 0
 --- !u!1 &439865608
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,6 +3192,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!1 &479356604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 479356605}
+  - component: {fileID: 479356606}
+  m_Layer: 0
+  m_Name: WinLoseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &479356605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479356604}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1167257067}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &479356606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479356604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9691ae6d2804a4749a713e257ac28446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winRate: 25
+  smashedVFXPosition: {fileID: 28631848}
 --- !u!1 &488839645
 GameObject:
   m_ObjectHideFlags: 0
@@ -4781,6 +4881,7 @@ RectTransform:
   m_Children:
   - {fileID: 259546966}
   - {fileID: 1900837749}
+  - {fileID: 1298441012}
   - {fileID: 375827540}
   - {fileID: 714763185}
   - {fileID: 488839646}
@@ -6202,7 +6303,19 @@ MonoBehaviour:
   ButtonGlow: {fileID: 1484427127}
   onClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 266504946}
+        m_TargetAssemblyTypeName: GameplayManager, Assembly-CSharp
+        m_MethodName: ToggleAutoSpin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1145636226
 GameObject:
   m_ObjectHideFlags: 0
@@ -6366,6 +6479,7 @@ Transform:
   - {fileID: 233784897}
   - {fileID: 266504945}
   - {fileID: 1876824753}
+  - {fileID: 479356605}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1167257068
@@ -6387,6 +6501,7 @@ MonoBehaviour:
   betManager_: {fileID: 233784898}
   gamePlayManager_: {fileID: 266504946}
   boulderManager_: {fileID: 1876824754}
+  winLoseManager_: {fileID: 479356606}
 --- !u!1 &1204549589
 GameObject:
   m_ObjectHideFlags: 0
@@ -6763,6 +6878,11 @@ MonoBehaviour:
     parent: {fileID: 1566813178}
     initialSize: 24
     maxCapacity: 60
+  - objType: 1
+    prefab: {fileID: 2587431950063368508, guid: 18b479c3563952f4c8ea368982ea92bb, type: 3}
+    parent: {fileID: 1566813178}
+    initialSize: 24
+    maxCapacity: 60
 --- !u!1 &1269537972
 GameObject:
   m_ObjectHideFlags: 0
@@ -6878,6 +6998,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1298441011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1298441012}
+  m_Layer: 5
+  m_Name: SmashedEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1298441012
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298441011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 28631847}
+  m_Father: {fileID: 804414160}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -157.4}
+  m_SizeDelta: {x: 0, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1312087342
 GameObject:
   m_ObjectHideFlags: 0
@@ -10222,6 +10378,7 @@ MonoBehaviour:
   movement: {fileID: 1310617918411526361}
   selection: {fileID: 1834540281}
   IsSkip: 0
+  Boulder: {fileID: 0}
 --- !u!1 &1884109659
 GameObject:
   m_ObjectHideFlags: 0

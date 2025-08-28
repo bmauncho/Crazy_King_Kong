@@ -17,8 +17,8 @@ public class BoulderMovement : MonoBehaviour
          Transform smashPosition ,
          Boulders boulders,
          SmashPosition smashPos,
-         float moveDuration = 0.1f ,
-         float delayBetween = 0.1f ,
+         float moveDuration = 0.075f ,
+         float delayBetween = 0.05f ,
          Action OnComplete = null )
     {
         BoulderPos [] boulderPositions = boulders.boulderConfigs [whichConfig].ballPositions;

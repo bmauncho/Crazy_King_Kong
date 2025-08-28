@@ -3,11 +3,15 @@ using UnityEngine;
 public class SmashEvent : MonoBehaviour
 {
     BoulderManager boulderMan;
+    GameplayManager gameplayMan;
+    WinLoseManager winLoseMan;
     public bool IsComplete = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         boulderMan = CommandCenter.Instance.boulderManager_;
+        gameplayMan = CommandCenter.Instance.gamePlayManager_;
+        winLoseMan = CommandCenter.Instance.winLoseManager_;
     }
 
     // Update is called once per frame
@@ -21,7 +25,16 @@ public class SmashEvent : MonoBehaviour
         //Debug.Log("play - hit effect");
         //baulder hit effect depending if its a win or a lose
         //crack effet / lose effect
-        boulderMan.Boulder.GetComponent<Boulder>().crack();
+        bool isWin = gameplayMan.canWin;
+        if (isWin)
+        {
+            winLoseMan.win();
+        }
+        else
+        {
+            winLoseMan.lose();
+        }
+           
         //break effect/wineffect
     }
 

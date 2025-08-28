@@ -36,12 +36,12 @@ public class KongAnim : MonoBehaviour
     private KongAnimType [] winTypes = { KongAnimType.WinBoth , KongAnimType.WinSingle };
     private KongAnimType [] loseTypes = { KongAnimType.ThumpBoth , KongAnimType.ThumpSingle };
 
-
+    public bool IsAnimating = false;
     public IEnumerator PlayKongAnim ( KongAnimType type )
     {
         if (currentAimType == type)
             yield break;
-
+        IsAnimating = true;
         var anim = GetKongAnim(type);
 
         foreach (var kAnim in KongAnimations)
@@ -61,6 +61,7 @@ public class KongAnim : MonoBehaviour
             yield return new WaitUntil(() => anim.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && smashEvent.IsComplete);
             smashEvent.IsComplete = false;
         }
+        IsAnimating = false;
     }
 
     public KongAnimation GetKongAnim ( KongAnimType type )

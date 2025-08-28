@@ -10,11 +10,13 @@ public class BoulderCrackAnim : MonoBehaviour
     public void ShowCrack ()
     {
         crack.gameObject.SetActive(true);
-        var sr = crack.GetComponent<Image>();
-        if (sr != null)
+        if (crack != null)
         {
-            sr.sprite = cracks [crackLevel];
-            crackLevel++;
+            crack.sprite = cracks [crackLevel];
+            if (crackLevel <= cracks.Length-1)
+            {
+                crackLevel++;
+            }
         }
     }
 

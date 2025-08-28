@@ -15,6 +15,7 @@ public class CommandCenter : MonoBehaviour
     public BetManager betManager_;
     public GameplayManager gamePlayManager_;
     public BoulderManager boulderManager_;
+    public WinLoseManager winLoseManager_;
 
     private void Awake ()
     {
