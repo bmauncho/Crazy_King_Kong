@@ -49,6 +49,7 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableSpin();
         // Coroutine ends
         yield return null;
+        yield return StartCoroutine(BonusGame());
 
         if (gamePlayMan_.canAutoSpin)
         {
@@ -71,6 +72,9 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableSpin();
         //Debug.Log("Disable - Spin");
         yield return null;
+
+        yield return StartCoroutine(BonusGame());
+
         if (gamePlayMan_.canAutoSpin)
         {
             gamePlayMan_.RestartAutoSpin();
@@ -97,7 +101,17 @@ public class WinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(clipLength + 0.1f);
 
         poolMan_.ReturnToPool(PoolType.SmashVfx , smashFx);
+    }
 
+    IEnumerator BonusGame ()
+    {
+        bool isBonusGame = gamePlayMan_.CanShowBonusGame();
 
+        if (isBonusGame)
+        {
+
+        }
+
+        yield return null;
     }
 }
