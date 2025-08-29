@@ -5,10 +5,17 @@ public enum GameMode
     Demo,
     Live,
 }
+
+public enum GameType
+{
+    Base,
+    Bonus,
+}
 public class CommandCenter : MonoBehaviour
 {
     public static CommandCenter Instance { get; private set; }
     public GameMode gameMode; // Live or Demo
+    public GameType gameType;
     public PoolManager poolManager_;
     public TextManager textManager_;
     public CurrencyManager currencyManager_;
@@ -52,9 +59,19 @@ public class CommandCenter : MonoBehaviour
         gameMode = mode;
     }
 
+    public void SetGameType(GameType type )
+    {
+        gameType = type;
+    }
+
     public bool IsDemo ()
     {
         return gameMode == GameMode.Demo;
+    }
+
+    public bool IsBonus ()
+    {
+        return gameType == GameType.Bonus;
     }
 
     private void OnDestroy ()

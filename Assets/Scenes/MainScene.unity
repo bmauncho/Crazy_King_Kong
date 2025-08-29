@@ -2082,6 +2082,10 @@ MonoBehaviour:
   canSpin: 0
   canSkip: 0
   canAutoSpin: 0
+  buttons:
+  - {fileID: 1977053494}
+  - {fileID: 1586623971}
+  - {fileID: 1269537976}
 --- !u!1 &269515144
 GameObject:
   m_ObjectHideFlags: 0
@@ -6480,6 +6484,7 @@ Transform:
   - {fileID: 266504945}
   - {fileID: 1876824753}
   - {fileID: 479356605}
+  - {fileID: 1394378261}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1167257068
@@ -6495,6 +6500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
+  gameType: 0
   poolManager_: {fileID: 1224251723}
   textManager_: {fileID: 1975777255}
   currencyManager_: {fileID: 1577311422}
@@ -6896,7 +6902,7 @@ GameObject:
   - component: {fileID: 1269537974}
   - component: {fileID: 1269537976}
   m_Layer: 5
-  m_Name: Btn
+  m_Name: IncreaseBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7731,6 +7737,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6374b54e60d0614eb43addc606df2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1394378260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394378261}
+  - component: {fileID: 1394378262}
+  m_Layer: 0
+  m_Name: PayOutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1394378261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394378260}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1167257067}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1394378262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394378260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76933bb01f9d02f4d87a51e3750b891b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseConfig:
+    gameType: 0
+    config:
+    - BoulderType: 0
+      minMultiplier: 1.2
+      maxMultiplier: 10
+    - BoulderType: 1
+      minMultiplier: 1.3
+      maxMultiplier: 20
+    - BoulderType: 2
+      minMultiplier: 1.4
+      maxMultiplier: 50
+    - BoulderType: 3
+      minMultiplier: 1.5
+      maxMultiplier: 100
+  BonusConfig:
+    gameType: 1
+    config:
+    - BonusOptions: 0
+      minMultiplier: 28
+      maxMultiplier: 888
+    - BonusOptions: 1
+      minMultiplier: 18
+      maxMultiplier: 18
+    - BonusOptions: 2
+      minMultiplier: 8
+      maxMultiplier: 8
 --- !u!1 &1408893107
 GameObject:
   m_ObjectHideFlags: 0
@@ -8815,7 +8892,7 @@ GameObject:
   - component: {fileID: 1586623969}
   - component: {fileID: 1586623971}
   m_Layer: 5
-  m_Name: Btn
+  m_Name: DecreaseBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10196,6 +10273,15 @@ MonoBehaviour:
   - type: 3
     boulder: {fileID: 21300000, guid: aefe6a1e3c9e8e8419ba3e863fe500bc, type: 3}
   maxRepeat: 4
+  probabilityWeights:
+  - type: 0
+    weight: 75
+  - type: 1
+    weight: 50
+  - type: 2
+    weight: 25
+  - type: 3
+    weight: 10
 --- !u!4 &1834540282
 Transform:
   m_ObjectHideFlags: 0
@@ -10816,7 +10902,7 @@ GameObject:
   - component: {fileID: 1977053492}
   - component: {fileID: 1977053494}
   m_Layer: 5
-  m_Name: Btn
+  m_Name: SwitchBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

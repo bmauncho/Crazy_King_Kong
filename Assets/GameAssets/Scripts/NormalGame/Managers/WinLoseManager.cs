@@ -41,6 +41,11 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableSpin();
         // Coroutine ends
         yield return null;
+
+        if (gamePlayMan_.canAutoSpin)
+        {
+            gamePlayMan_.RestartAutoSpin();
+        }
     }
 
     public void lose ()
@@ -56,8 +61,12 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableWin();
         yield return new WaitUntil(() => !boulderMan_.kongAnim.IsAnimating);
         gamePlayMan_.DisableSpin();
-        Debug.Log("Disable - Spin");
+        //Debug.Log("Disable - Spin");
         yield return null;
+        if (gamePlayMan_.canAutoSpin)
+        {
+            gamePlayMan_.RestartAutoSpin();
+        }
     }
 
     IEnumerator winVfx ()

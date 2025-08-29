@@ -1,19 +1,29 @@
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
+public enum BonusOptions
+{
+    Gold,
+    Silver,
+    Bronze,
+}
 public class GameplayManager : MonoBehaviour
 {
     WinLoseManager winLoseMan_;
+    CurrencyManager currencyMan_;
     public SettingsUI settingUi;
     public GameRules gameRules;
     public bool canWin = false;
     public bool canSpin = false;
     public bool canSkip = false;
     public bool canAutoSpin = false;
+    public ButtonController [] buttons;
+    private Coroutine autoSpin;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         winLoseMan_ = CommandCenter.Instance.winLoseManager_;
+        currencyMan_ = CommandCenter.Instance.currencyManager_;
     }
 
     // Update is called once per frame
@@ -49,6 +59,7 @@ public class GameplayManager : MonoBehaviour
     IEnumerator smash ()
     {
         canWin = winLoseMan_.CanWin();
+        yield return StartCoroutine(currencyMan_.Bet());
         yield return new WaitForSeconds(.25f);
         CommandCenter.Instance.boulderManager_.SmashBoulder();
     }
@@ -97,11 +108,47 @@ public class GameplayManager : MonoBehaviour
         if (!canAutoSpin)
         {
             canAutoSpin = true;
+
+            StartAutospinSequence();
         }
         else
         {
             canAutoSpin = false;
+            StopAutoSpinSequence();
         }
+    }
+
+    public void StartAutospinSequence ()
+    {
+        if (autoSpin == null)
+        {
+            autoSpin = StartCoroutine(AutoSpin());
+        }
+    }
+
+    public void StopAutoSpinSequence ()
+    {
+        if (autoSpin != null)
+        {
+            StopCoroutine(autoSpin);
+            autoSpin = null;
+        }
+    }
+
+    public void RestartAutoSpin ()
+    {
+        if(canAutoSpin && autoSpin == null)
+        {
+            autoSpin = StartCoroutine(AutoSpin());
+        }
+    }
+
+    public IEnumerator AutoSpin ()
+    {
+        yield return new WaitUntil(() => !canSkip && !canSpin);
+        spin();
+        yield return null;
+        autoSpin = null;
     }
 
     public void EnableSpin ()
@@ -127,5 +174,21 @@ public class GameplayManager : MonoBehaviour
     public void DisableWin ()
     {
         canWin = false;
+    }
+
+    public void EnableButtons ()
+    {
+        foreach(var button in buttons)
+        {
+            button.isInteractable = true;
+        }
+    }
+
+    public void DisableButtons ()
+    {
+        foreach(var button in buttons)
+        {
+            button.isInteractable = false;
+        }
     }
 }

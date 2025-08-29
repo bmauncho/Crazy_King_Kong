@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class probabilityWeights
+{
+    public BoulderType type;
+    [Range(0f, 100f)]
+    public float weight;
+}
+
 public class BoulderSelection : MonoBehaviour
 {
     [Header("boulder type config")]
@@ -8,6 +16,28 @@ public class BoulderSelection : MonoBehaviour
     public int maxRepeat = 4;
     private int lastIndex = -1;
     private int repeatCount = 0;
+    public List<probabilityWeights> probabilityWeights = new List<probabilityWeights>();
+
+    public double totalWeights;
+
+    private void Start ()
+    {
+        calculatetotalWeights();
+    }
+
+    void calculatetotalWeights ()
+    {
+        foreach(var weight in probabilityWeights)
+        {
+            totalWeights += weight.weight;
+        }
+    }
+
+    public double GetTotalWeights ()
+    {
+        return totalWeights;
+    }
+
     public BoulderTypeConfig GetRandomBoulderTypeConfig ()
     {
         if (boulderTypeConfig == null || boulderTypeConfig.Length == 0)
@@ -28,7 +58,6 @@ public class BoulderSelection : MonoBehaviour
 
     public int WhichConfig ()
     {
-        int configIndex = 0;
         int configCount = boulderTypeConfig.Length;
 
         if (configCount <= 0)
@@ -37,42 +66,63 @@ public class BoulderSelection : MonoBehaviour
             return 0;
         }
 
-        if (lastIndex == -1)
+        List<int> validIndices = new List<int>();
+        List<float> validWeights = new List<float>();
+
+        for (int i = 0 ; i < configCount ; i++)
         {
-            configIndex = Random.Range(0 , configCount);
-            repeatCount = 1;
+            if (repeatCount >= maxRepeat && i == lastIndex)
+                continue;
+
+            validIndices.Add(i);
+
+            // Find matching weight from the probabilityWeights list
+            float weight = 1f; // default if not found
+            var match = probabilityWeights.Find(p => p.type == boulderTypeConfig [i].type);
+            if (match != null)
+            {
+                weight = match.weight;
+            }
+            validWeights.Add(weight);
         }
+
+        if (validIndices.Count == 0)
+        {
+            Debug.LogWarning("Only one boulder type available or all filtered out. Reusing last index.");
+            return lastIndex;
+        }
+
+        int selectedRelativeIndex = WeightedRandomIndex(validWeights);
+        int selectedConfigIndex = validIndices [selectedRelativeIndex];
+
+        // Update repeat tracking
+        if (selectedConfigIndex == lastIndex)
+            repeatCount++;
         else
+            repeatCount = 1;
+
+        lastIndex = selectedConfigIndex;
+        return selectedConfigIndex;
+    }
+
+
+    private int WeightedRandomIndex ( List<float> weights )
+    {
+        float totalWeight = 0f;
+        foreach (float w in weights)
+            totalWeight += w;
+
+        float randomValue = Random.Range(0f , totalWeight);
+        float cumulative = 0f;
+
+        for (int i = 0 ; i < weights.Count ; i++)
         {
-            List<int> possibleIndices = new List<int>();
-
-            for (int i = 0 ; i < configCount ; i++)
-            {
-                // If repeat limit reached, skip the last index
-                if (repeatCount >= maxRepeat && i == lastIndex)
-                    continue;
-
-                possibleIndices.Add(i);
-            }
-
-            if (possibleIndices.Count == 0)
-            {
-                Debug.LogWarning("Only one boulder type available or all filtered out. Reusing last index.");
-                configIndex = lastIndex;
-            }
-            else
-            {
-                configIndex = possibleIndices [Random.Range(0 , possibleIndices.Count)];
-            }
-
-            // Update repeat count
-            if (configIndex == lastIndex)
-                repeatCount++;
-            else
-                repeatCount = 1;
+            cumulative += weights [i];
+            if (randomValue < cumulative)
+                return i;
         }
 
-        lastIndex = configIndex;
-        return configIndex;
+        return weights.Count - 1; // fallback
     }
+
 }
