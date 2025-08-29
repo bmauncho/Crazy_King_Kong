@@ -5,6 +5,7 @@ public enum PoolType
 {
     Boulder,
     SmashVfx,
+    WinUIFx,
 }
 
 [System.Serializable]

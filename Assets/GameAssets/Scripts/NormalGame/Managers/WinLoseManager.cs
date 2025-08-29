@@ -92,10 +92,12 @@ public class WinLoseManager : MonoBehaviour
             clipLength = anim.GetCurrentAnimatorClipInfo(0) [0].clip.length;
         }
 
+        StartCoroutine(payOutMan_.ShowWin(currntWinBoulder));
+
         yield return new WaitForSeconds(clipLength + 0.1f);
 
         poolMan_.ReturnToPool(PoolType.SmashVfx , smashFx);
 
-        StartCoroutine(payOutMan_.ShowWin(currntWinBoulder));
+
     }
 }

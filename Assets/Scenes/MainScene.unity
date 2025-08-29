@@ -2086,6 +2086,7 @@ MonoBehaviour:
   - {fileID: 1977053494}
   - {fileID: 1586623971}
   - {fileID: 1269537976}
+  spins: 0
 --- !u!1 &269515144
 GameObject:
   m_ObjectHideFlags: 0
@@ -3278,6 +3279,41 @@ RectTransform:
   m_AnchoredPosition: {x: 167.5, y: -28.3}
   m_SizeDelta: {x: 303.2545, y: 218.4899}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!1 &489304789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 489304790}
+  m_Layer: 5
+  m_Name: WinUI_Anim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &489304790
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489304789}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1586100404}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 62.07}
+  m_SizeDelta: {x: 0, y: 51.72}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &523042306
 GameObject:
   m_ObjectHideFlags: 0
@@ -6890,6 +6926,11 @@ MonoBehaviour:
     parent: {fileID: 1566813178}
     initialSize: 24
     maxCapacity: 60
+  - objType: 2
+    prefab: {fileID: 7626915927691841475, guid: 12a650a1ece36164387bf0abdc19f4fc, type: 3}
+    parent: {fileID: 1566813178}
+    initialSize: 24
+    maxCapacity: 60
 --- !u!1 &1269537972
 GameObject:
   m_ObjectHideFlags: 0
@@ -7810,6 +7851,7 @@ MonoBehaviour:
       minMultiplier: 8
       maxMultiplier: 8
   winUI: {fileID: 1409083235}
+  WinUIFx_SpawnPos: {fileID: 489304789}
 --- !u!1 &1408893107
 GameObject:
   m_ObjectHideFlags: 0
@@ -8839,7 +8881,6 @@ MonoBehaviour:
   UserInfo: {fileID: 978361888}
   CashAmount: 0
   winAmount: 0
-  cumilativeWinAMount: 0
 --- !u!4 &1577311423
 Transform:
   m_ObjectHideFlags: 0
@@ -8888,6 +8929,7 @@ RectTransform:
   - {fileID: 2051872368}
   - {fileID: 1312087343}
   - {fileID: 1409083234}
+  - {fileID: 489304790}
   m_Father: {fileID: 1788307838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10906,6 +10948,9 @@ MonoBehaviour:
   - textType: 1
     prefix: UI_Bet1_FNT_
     spriteAsset: {fileID: 11400000, guid: bc6d1ab32acb9b748b54deb656f314c2, type: 2}
+  - textType: 3
+    prefix: UI_Bet3_FNT_
+    spriteAsset: {fileID: 11400000, guid: 209c4fa8b648e0340ae98a1125bc71bd, type: 2}
 --- !u!1 &1977053490
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,12 +38,15 @@ public class PayOutManager : MonoBehaviour
     BetManager betMan_;
     TextManager textMan_;
     GameplayManager gameplayMan_;
+    PoolManager poolMan_;
     public BaseGamePayOutConfig BaseConfig;
     public BonusGamePayOutConfig BonusConfig;
 
     public WinUI winUI;
 
     double TotalWinAmount;
+
+    public GameObject WinUIFx_SpawnPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,6 +55,7 @@ public class PayOutManager : MonoBehaviour
         betMan_ = CommandCenter.Instance.betManager_;
         textMan_ = CommandCenter.Instance.textManager_;
         gameplayMan_ = CommandCenter.Instance.gamePlayManager_;
+        poolMan_ = CommandCenter.Instance.poolManager_;
     }
 
     public double calculatePayOut (BoulderType Type,double spinsToCrush)
@@ -109,6 +113,19 @@ public class PayOutManager : MonoBehaviour
         string payOut = NumberFormatter.FormatString(winAmount , 2);
         //Debug.Log(payOut);
         textMan_.refreshWinText(payOut, winText);
+
+        GameObject winUiFx = poolMan_.GetFromPool(
+            PoolType.WinUIFx ,
+            WinUIFx_SpawnPos.transform.position ,
+            Quaternion.identity ,
+            WinUIFx_SpawnPos.transform);
+
+
+        winUiFx.GetComponent<WinUIFx>().ShowWinFx(() =>
+        {
+            poolMan_.ReturnToPool(PoolType.WinUIFx , winUiFx);
+        });
+
         yield return new WaitForSeconds(3f);
         HideWinUI();
     }
