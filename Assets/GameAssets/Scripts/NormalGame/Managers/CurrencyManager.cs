@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
+    BetManager betManager;
     TextManager textManager_;
     public UserInfo UserInfo;
     public double CashAmount;
     public double winAmount;
-    public double cumilativeWinAMount;
     TMP_Text walletAmountText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        betManager = CommandCenter.Instance.betManager_;
         walletAmountText = UserInfo.walletAmount;
         textManager_= CommandCenter.Instance.textManager_;
         if (CommandCenter.Instance)
@@ -40,26 +41,11 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
-    public string GetTotalWinAmount ()
-    {
-        winAmount = 0;
-        if (CommandCenter.Instance.IsDemo())
-        {
-            cumilativeWinAMount += winAmount;
-        }
-        else
-        {
-            cumilativeWinAMount = winAmount;
-        }
-
-        return cumilativeWinAMount.ToString("N2" , CultureInfo.CurrentCulture); ;
-    }
-
     public IEnumerator Bet ()
     {
         if (CommandCenter.Instance.IsDemo())
         {
-            string betAmount = "0";
+            string betAmount = betManager.betAmount;
 
             if (double.TryParse(betAmount , out double bet))
             {
@@ -81,11 +67,11 @@ public class CurrencyManager : MonoBehaviour
     }
 
 
-    public void CollectWinnings ()
+    public void CollectWinnings (string winAmount)
     {
         if (CommandCenter.Instance.IsDemo())
         {
-            string totalWininings = GetTotalWinAmount();
+            string totalWininings = winAmount;
             if (double.TryParse(totalWininings , out double winnings))
             {
                 CashAmount += winnings;

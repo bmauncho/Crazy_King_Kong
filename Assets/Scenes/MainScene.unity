@@ -6508,6 +6508,7 @@ MonoBehaviour:
   gamePlayManager_: {fileID: 266504946}
   boulderManager_: {fileID: 1876824754}
   winLoseManager_: {fileID: 479356606}
+  payOutManager_: {fileID: 1394378262}
 --- !u!1 &1204549589
 GameObject:
   m_ObjectHideFlags: 0
@@ -7808,6 +7809,7 @@ MonoBehaviour:
     - BonusOptions: 2
       minMultiplier: 8
       maxMultiplier: 8
+  winUI: {fileID: 1409083235}
 --- !u!1 &1408893107
 GameObject:
   m_ObjectHideFlags: 0
@@ -7892,6 +7894,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1409083234}
+  - component: {fileID: 1409083235}
   m_Layer: 5
   m_Name: WinUI
   m_TagString: Untagged
@@ -7919,6 +7922,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 51.72}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1409083235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409083233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19bd8f7ac351d364e859b1c5147b47a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winAmount: {fileID: 1676120202}
 --- !u!1 &1422680911
 GameObject:
   m_ObjectHideFlags: 0
@@ -10282,6 +10298,7 @@ MonoBehaviour:
     weight: 25
   - type: 3
     weight: 10
+  totalWeights: 0
 --- !u!4 &1834540282
 Transform:
   m_ObjectHideFlags: 0

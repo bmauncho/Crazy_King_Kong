@@ -23,6 +23,7 @@ public class CommandCenter : MonoBehaviour
     public GameplayManager gamePlayManager_;
     public BoulderManager boulderManager_;
     public WinLoseManager winLoseManager_;
+    public PayOutManager payOutManager_;
 
     private void Awake ()
     {

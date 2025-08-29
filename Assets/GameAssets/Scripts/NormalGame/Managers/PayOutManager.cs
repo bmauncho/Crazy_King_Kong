@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,20 +36,30 @@ public class PayOutManager : MonoBehaviour
 {
     BoulderManager boulderMan_;
     BetManager betMan_;
+    TextManager textMan_;
+    GameplayManager gameplayMan_;
     public BaseGamePayOutConfig BaseConfig;
     public BonusGamePayOutConfig BonusConfig;
+
+    public WinUI winUI;
+
+    double TotalWinAmount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         boulderMan_ = CommandCenter.Instance.boulderManager_;
         betMan_ = CommandCenter.Instance.betManager_;
+        textMan_ = CommandCenter.Instance.textManager_;
+        gameplayMan_ = CommandCenter.Instance.gamePlayManager_;
     }
 
-    public double calculatePayOut (BoulderType Type)
+    public double calculatePayOut (BoulderType Type,double spinsToCrush)
     {
         // payout = Bet * (probabilites * expectedMultiplier);
+        Debug.Log($"BoulderType - {Type.ToString()}");
         string betAmount = betMan_.betAmount;
+
         double Bet = 1;
 
         if(double.TryParse(betAmount,out double newBetAmount))
@@ -57,8 +69,9 @@ public class PayOutManager : MonoBehaviour
 
         double expectedPayOut = calculateExpectedMultiplier(Type) * calculateNormalizedWeights(Type);
         double payOut =  Bet * expectedPayOut;
-
-        return payOut;
+        //Debug.Log($"Spins to crush - {spinsToCrush}");
+        TotalWinAmount = payOut/spinsToCrush;
+        return TotalWinAmount;
     }
 
     public double calculateExpectedMultiplier (BoulderType Type)
@@ -85,4 +98,29 @@ public class PayOutManager : MonoBehaviour
         }
         return 0;
     }
+
+    public IEnumerator ShowWin (BoulderType boulderType)
+    {
+        winUI.ShowWinUI();
+        double spinsToCrush = gameplayMan_.spins;
+        TMP_Text winText = winUI.winAmount;
+        string winAmount = calculatePayOut(boulderType,spinsToCrush).ToString();
+        //Debug.Log("winAmount : " + winAmount);
+        string payOut = NumberFormatter.FormatString(winAmount , 2);
+        //Debug.Log(payOut);
+        textMan_.refreshWinText(payOut, winText);
+        yield return new WaitForSeconds(3f);
+        HideWinUI();
+    }
+
+    public void HideWinUI ()
+    {
+        winUI.HideWinUI();
+    }
+
+    public double GetWinAmount ()
+    {
+        return TotalWinAmount;
+    }
+
 }

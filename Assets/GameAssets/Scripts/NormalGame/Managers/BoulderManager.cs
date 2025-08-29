@@ -100,4 +100,14 @@ public class BoulderManager : MonoBehaviour
         boulder.resetCrack();
         poolMan_.ReturnToPool(PoolType.Boulder , Boulder);
     }
+
+    public BoulderType GetCurrentBoulderType ()
+    {
+        if (Boulder == null)
+        {
+            Debug.LogWarning("Boulder gameobject missing!Defauling to Rock boulder Type");
+            return BoulderType.Rock;
+        }
+        return Boulder.GetComponent<Boulder>().boulderType;
+    }
 }

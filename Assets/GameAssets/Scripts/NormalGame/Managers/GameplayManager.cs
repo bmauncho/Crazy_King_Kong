@@ -19,6 +19,7 @@ public class GameplayManager : MonoBehaviour
     public bool canAutoSpin = false;
     public ButtonController [] buttons;
     private Coroutine autoSpin;
+    public double spins;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,7 +51,7 @@ public class GameplayManager : MonoBehaviour
         {
             EnableSpin();
         }
-
+        IncreaseSpins();
         canWin = winLoseMan_.CanWin();
         StartCoroutine(smash());
     }
@@ -190,5 +191,15 @@ public class GameplayManager : MonoBehaviour
         {
             button.isInteractable = false;
         }
+    }
+
+    public void IncreaseSpins ()
+    {
+        spins++;
+    }
+
+    public void ResetSpins ()
+    {
+        spins = 0;
     }
 }

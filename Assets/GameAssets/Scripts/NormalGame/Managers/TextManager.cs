@@ -102,6 +102,7 @@ public class TextManager : MonoBehaviour
         }
     }
 
+
     [ContextMenu("Test")]
     public void Test ()
     {
