@@ -9,6 +9,7 @@ public enum TextType
     BetText,
     WalletText,
     WinUIText,
+    BonusWinUiText,
 }
 
 [System.Serializable]

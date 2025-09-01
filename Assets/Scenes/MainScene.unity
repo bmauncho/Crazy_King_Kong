@@ -12140,6 +12140,9 @@ MonoBehaviour:
   - textType: 3
     prefix: UI_Bet3_FNT_
     spriteAsset: {fileID: 11400000, guid: 209c4fa8b648e0340ae98a1125bc71bd, type: 2}
+  - textType: 4
+    prefix: UI_Win2_FNT_
+    spriteAsset: {fileID: 11400000, guid: 97667111ee2409d45badcba646bee5ef, type: 2}
 --- !u!1 &1977053490
 GameObject:
   m_ObjectHideFlags: 0
