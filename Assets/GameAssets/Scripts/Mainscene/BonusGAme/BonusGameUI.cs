@@ -55,10 +55,11 @@ public class BonusGameUI : MonoBehaviour
         anim.Play("BonusGameUI_Hide");
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
-
+        Debug.Log("Hide anim Done");
         removeOption();
         HideBonusGame ();
         yield return null;
+        Debug.Log("Show bonusreward");
     }
 
     public void selectOption(BonusGameOption which )
@@ -83,16 +84,22 @@ public class BonusGameUI : MonoBehaviour
         StartCoroutine(hideBonusGameUI ());
     }
 
-    public IEnumerator BonusSequence ()
+    public void bonusSequence ()
+    {
+        StartCoroutine(BonusSequence());
+    }
+
+    IEnumerator BonusSequence ()
     {
         yield return StartCoroutine(selectedOption.BreakAnimSequence ());
 
         yield return new WaitForSeconds(1f);
 
         yield return StartCoroutine (hideBonusGameUI ());
-
+        Debug.Log("Show_BonusWin ");
         BonusGameWinUI bonusGameWinUI = gamePlayMan_.bonusGame.bonusWinUI;
         BonusOptions bonusOption = selectedOption.TheOwner.GetComponent<BonusReward>().Option;
+        Debug.Log($"selected bonusoption - {bonusOption.ToString()}");
         //win visualization
         yield return StartCoroutine(bonusGameWinUI.showWinAmount(bonusOption));
         //set is canshowbonusgame to false

@@ -9,6 +9,7 @@ public class BonusGameOption : MonoBehaviour
     public GameObject BreakAnim;
     public GameObject BonusReward;
     [Header("Glow Settings")]
+    public GameObject GlowAnim;
     public Image GlowImage;
     private Sequence glowSequence;
     public float duration = 1.0f;
@@ -19,6 +20,7 @@ public class BonusGameOption : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        resetBonusOption();
         StartCoroutine(Glow());
     }
 
@@ -32,13 +34,13 @@ public class BonusGameOption : MonoBehaviour
     {
         while (isActiveAndEnabled)
         {
-            GlowImage.fillAmount = 1;
+            GlowImage.fillAmount = 0;
             Color c = GlowImage.color;
             c.a = 1;
             GlowImage.color = c;
 
             glowSequence = DOTween.Sequence();
-            glowSequence.Append(GlowImage.DOFillAmount(0 ,duration))
+            glowSequence.Append(GlowImage.DOFillAmount(1 ,duration))
                         .Join(GlowImage.DOFade(0 ,duration));
 
             yield return glowSequence.WaitForCompletion();
@@ -76,18 +78,26 @@ public class BonusGameOption : MonoBehaviour
 
         if (anim != null)
         {
+            BonusItem.SetActive(false);
+            GlowAnim.SetActive(false);
+
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+
+            BreakAnim.SetActive(false);
         }
-
-        yield return null;
-
-        BreakAnim.SetActive(false);
+        yield return new WaitForSeconds(3f);
     }
 
     public void selectBonus ()
     {
         BonusGame bonusGame = CommandCenter.Instance.gamePlayManager_.bonusGame;
         bonusGame.bonusUI.selectOption(this);
-        StartCoroutine(bonusGame.bonusUI.BonusSequence());
+        bonusGame.bonusUI.bonusSequence();
+    }
+
+    public void resetBonusOption ()
+    {
+        BonusItem.SetActive(true);
+        GlowAnim.SetActive(true);
     }
 }

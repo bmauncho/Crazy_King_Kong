@@ -78,7 +78,7 @@ public class BonusGame : MonoBehaviour
                 return;
             }
 
-            Transform parent = bonusOpt.transform;
+            Transform parent = bonusOpt.BonusReward.transform;
 
             GameObject reward = poolMan_.GetFromPool(
                 PoolType.BonusReward,
@@ -87,6 +87,9 @@ public class BonusGame : MonoBehaviour
                 parent);
 
             bonusOpt.AddOwner(reward);
+            reward.transform.localPosition = Vector3.zero;
+            reward.transform.localScale = Vector3.one;
+
             BonusReward bonusComponenet = reward.GetComponent<BonusReward>();
             bonusComponenet.SetData(bonusConfig [i].Bg , bonusConfig [i].Icon , newBonusOptionsOrder [i]);
             i++;

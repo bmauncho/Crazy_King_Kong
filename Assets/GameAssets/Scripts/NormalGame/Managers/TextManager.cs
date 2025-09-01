@@ -118,6 +118,20 @@ public class TextManager : MonoBehaviour
             );
         }
     }
+    public void refreshBonusWinUIText ( string Input , TMP_Text text )
+    {
+        TextInfo info = TextInfo(TextType.BonusWinUiText);
+        if (info != null)
+        {
+            RefreshNumbersText(
+                Input ,
+                info.prefix ,
+                text ,
+                info.spriteAsset ,
+                charRefrences
+            );
+        }
+    }
 
 
     [ContextMenu("Test")]

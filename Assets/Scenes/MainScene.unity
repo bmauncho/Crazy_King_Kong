@@ -3003,7 +3003,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 128.92}
-  m_SizeDelta: {x: 0, y: 149.035}
+  m_SizeDelta: {x: 0, y: 189.255}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378275334
 MonoBehaviour:
@@ -3400,7 +3400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winRate: 25
-  bonusGameProbability: 0
+  bonusGameProbability: 100
   smashedVFXPosition: {fileID: 28631848}
 --- !u!1 &488839645
 GameObject:
@@ -9749,8 +9749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 202, y: -128.925}
-  m_SizeDelta: {x: 404, y: 40.22}
+  m_AnchoredPosition: {x: 202, y: -149.035}
+  m_SizeDelta: {x: 404, y: 80.44}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1599468875
 MonoBehaviour:
@@ -9799,10 +9799,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -9919,7 +9919,7 @@ MonoBehaviour:
   bonusWinText: {fileID: 1599468875}
   Content: {fileID: 1345759011}
   winUIContent: {fileID: 378275332}
-  duration: 2
+  duration: 3
 --- !u!1 &1644167999
 GameObject:
   m_ObjectHideFlags: 0
@@ -10975,7 +10975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6488363341047203489, guid: fb2dd9290c8c61d449aaebcc3627d25e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 6488363341047203489, guid: fb2dd9290c8c61d449aaebcc3627d25e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12698,7 +12698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6488363341047203489, guid: fb2dd9290c8c61d449aaebcc3627d25e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -140
       objectReference: {fileID: 0}
     - target: {fileID: 6488363341047203489, guid: fb2dd9290c8c61d449aaebcc3627d25e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12743,6 +12743,10 @@ PrefabInstance:
     - target: {fileID: 6488363341047203489, guid: fb2dd9290c8c61d449aaebcc3627d25e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7255847545652948509, guid: fb2dd9290c8c61d449aaebcc3627d25e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

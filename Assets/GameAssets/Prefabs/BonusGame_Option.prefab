@@ -99,10 +99,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7863388311492109362}
   - {fileID: 4500227280039342195}
   - {fileID: 3690961977534657891}
   - {fileID: 3652019296560473715}
-  - {fileID: 7863388311492109362}
   m_Father: {fileID: 6488363341047203489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -202,6 +202,7 @@ MonoBehaviour:
   BonusItem: {fileID: 7255847545652948509}
   BreakAnim: {fileID: 2762266474124383050}
   BonusReward: {fileID: 3280643087879484821}
+  GlowAnim: {fileID: 5254668135946191523}
   GlowImage: {fileID: 2445976863739823938}
   duration: 1
   TheOwner: {fileID: 0}

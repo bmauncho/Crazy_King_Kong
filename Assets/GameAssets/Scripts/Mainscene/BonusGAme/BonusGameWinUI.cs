@@ -46,6 +46,7 @@ public class BonusGameWinUI : MonoBehaviour
 
     public IEnumerator showWinAmount (BonusOptions bonusOptions)
     {
+        Debug.Log("BonusPayOut!");
         ShowWinUi();
 
         var canvasGroup = winUIContent.GetComponent<CanvasGroup>();
@@ -68,7 +69,7 @@ public class BonusGameWinUI : MonoBehaviour
 
             string CASHAMOUNT = currentAmount.ToString();
             CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
-            textMan_.refreshWalletText(CASHAMOUNT , bonusWinText);
+            textMan_.refreshBonusWinUIText(CASHAMOUNT , bonusWinText);
             yield return null;
         }
 
@@ -78,9 +79,13 @@ public class BonusGameWinUI : MonoBehaviour
         // Ensure it ends exactly at winAmount
         string finalAmount = winAmount.ToString();
         finalAmount = NumberFormatter.FormatString(finalAmount , 2);
-        textMan_.refreshWalletText(finalAmount , bonusWinText);
+        textMan_.refreshBonusWinUIText(finalAmount , bonusWinText);
 
         yield return null;
+
+        bounceSequence = null;
+
+        yield return new WaitForSeconds(1f);
 
         yield return StartCoroutine(hideWinAmount());
 
@@ -109,9 +114,14 @@ public class BonusGameWinUI : MonoBehaviour
         yield return hideSequence.WaitForCompletion();
         setWinAmount(0);
         yield return null;
-
-       HideWinUI();
+        hideSequence = null;
+        HideWinUI();
     }
 
+    [ContextMenu("Test")]
+    public void Test ()
+    {
+        StartCoroutine(showWinAmount(BonusOptions.Silver));
+    }
 
 }
