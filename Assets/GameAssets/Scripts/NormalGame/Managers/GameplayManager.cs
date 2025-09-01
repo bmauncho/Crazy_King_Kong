@@ -1,12 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-public enum BonusOptions
-{
-    Gold,
-    Silver,
-    Bronze,
-}
+
 public class GameplayManager : MonoBehaviour
 {
     WinLoseManager winLoseMan_;
@@ -17,13 +12,14 @@ public class GameplayManager : MonoBehaviour
     public bool canSpin = false;
     public bool canSkip = false;
     public bool canAutoSpin = false;
+    public bool canShowBonusGame = false;
 
     public ButtonController [] buttons;
     private Coroutine autoSpin;
     public double spins;
-    [Header("Bonus Game probability")]
-    [Range(0f , 100f)]
-    public float bonusGameProbability;
+
+    public BonusGame bonusGame;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -55,8 +51,11 @@ public class GameplayManager : MonoBehaviour
         {
             EnableSpin();
         }
+
         IncreaseSpins();
         canWin = winLoseMan_.CanWin();
+        canShowBonusGame = winLoseMan_.CanShowBonusGame(canWin);
+
         StartCoroutine(smash());
     }
 
@@ -205,11 +204,5 @@ public class GameplayManager : MonoBehaviour
     public void ResetSpins ()
     {
         spins = 0;
-    }
-
-    public bool CanShowBonusGame ()
-    {
-        float roll = Random.value * 100f; // Random.value returns 0.0 to 1.0
-        return roll <= bonusGameProbability;
     }
 }

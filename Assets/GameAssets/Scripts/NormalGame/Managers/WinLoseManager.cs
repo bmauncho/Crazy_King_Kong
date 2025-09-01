@@ -8,8 +8,12 @@ public class WinLoseManager : MonoBehaviour
     PoolManager poolMan_;
     PayOutManager payOutMan_;
     CurrencyManager currencyMan_;
+    [Header("win Game probability")]
     [Range(0f , 100f)]
     public float winRate = 25f;
+    [Header("Bonus Game probability")]
+    [Range(0f , 100f)]
+    public float bonusGameProbability;
     public SmashedVFXPosition smashedVFXPosition;
     private void Start ()
     {
@@ -22,8 +26,16 @@ public class WinLoseManager : MonoBehaviour
 
     public bool CanWin ()
     {
-        float roll = Random.value * 100f; // Random.value returns 0.0 to 1.0
+        float roll = Random.value * 100f;
         return roll <= winRate;
+    }
+
+    public bool CanShowBonusGame (bool canWin)
+    {
+        if (!canWin) return false; // Only trigger bonus if a win happens
+
+        float roll = Random.value * 100f;
+        return roll <= bonusGameProbability;
     }
 
     public void win ()
@@ -49,7 +61,11 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableSpin();
         // Coroutine ends
         yield return null;
-        yield return StartCoroutine(BonusGame());
+
+        BonusGameUI bonusUI = gamePlayMan_.bonusGame.bonusUI;
+        yield return StartCoroutine(bonusUI.showBonusGameUI());
+
+        yield return new WaitUntil(() => !gamePlayMan_.canShowBonusGame);
 
         if (gamePlayMan_.canAutoSpin)
         {
@@ -72,8 +88,10 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableSpin();
         //Debug.Log("Disable - Spin");
         yield return null;
+        BonusGameUI bonusUI = gamePlayMan_.bonusGame.bonusUI;
+        yield return StartCoroutine(bonusUI.showBonusGameUI());
 
-        yield return StartCoroutine(BonusGame());
+        yield return new WaitUntil(()=> !gamePlayMan_.canShowBonusGame);
 
         if (gamePlayMan_.canAutoSpin)
         {
@@ -101,17 +119,5 @@ public class WinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(clipLength + 0.1f);
 
         poolMan_.ReturnToPool(PoolType.SmashVfx , smashFx);
-    }
-
-    IEnumerator BonusGame ()
-    {
-        bool isBonusGame = gamePlayMan_.CanShowBonusGame();
-
-        if (isBonusGame)
-        {
-
-        }
-
-        yield return null;
     }
 }
