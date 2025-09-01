@@ -60,6 +60,34 @@ public class BonusGameOption : MonoBehaviour
 
     void OnDisable ()
     {
+       stopGlow();
+    }
+
+    public void stopGlow ()
+    {
         glowSequence?.Kill();
+    }
+
+    public IEnumerator BreakAnimSequence ()
+    {
+        BreakAnim.SetActive(true);
+        Animator anim = BreakAnim.GetComponentInChildren<Animator>();
+        anim.Rebind();
+
+        if (anim != null)
+        {
+            yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        }
+
+        yield return null;
+
+        BreakAnim.SetActive(false);
+    }
+
+    public void selectBonus ()
+    {
+        BonusGame bonusGame = CommandCenter.Instance.gamePlayManager_.bonusGame;
+        bonusGame.bonusUI.selectOption(this);
+        StartCoroutine(bonusGame.bonusUI.BonusSequence());
     }
 }

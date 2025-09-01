@@ -205,4 +205,9 @@ public class GameplayManager : MonoBehaviour
     {
         spins = 0;
     }
+
+    public void resetBonusGame ()
+    {
+        canShowBonusGame = false;
+    }
 }

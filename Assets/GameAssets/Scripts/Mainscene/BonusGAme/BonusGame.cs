@@ -1,31 +1,35 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 public enum BonusOptions
 {
     Gold,
     Silver,
     Bronze,
 }
+
+[System.Serializable]
+public class BonusGameConfig
+{
+    public BonusOptions BonusOptions;
+    public Sprite Bg;
+    public Sprite Icon;
+}
+
 public class BonusGame : MonoBehaviour
 {
+    PoolManager poolMan_;
     public BonusGameUI bonusUI;
-    public BonusOptions DefaultOption;
-    public List<BonusOptions> newBonusOptionsOrder = new List<BonusOptions>(); 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public BonusGameWinUI bonusWinUI;
+    public BonusGameConfig [] bonusConfig;
+    public List<BonusOptions> newBonusOptionsOrder = new List<BonusOptions>();
+    private void Start ()
     {
-        
+        poolMan_ = CommandCenter.Instance.poolManager_;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public  void restBonusOptions ()
     {
         newBonusOptionsOrder.Clear();
@@ -58,10 +62,34 @@ public class BonusGame : MonoBehaviour
         }
     }
 
-
-    IEnumerator showBonusGame ()
+    public void setUpBonusRewards ()
     {
+        restBonusOptions ();
+        randomizeBonusOptionsOrder ();
 
-        yield return null;
+        int i = 0;
+
+        foreach(var bonusOpt in bonusUI.options)
+        {
+            if (bonusUI.options.Length > bonusConfig.Length ||
+                bonusUI.options.Length > newBonusOptionsOrder.Count)
+            {
+                Debug.LogWarning("Mismatch in bonus configuration data length.");
+                return;
+            }
+
+            Transform parent = bonusOpt.transform;
+
+            GameObject reward = poolMan_.GetFromPool(
+                PoolType.BonusReward,
+                Vector3.zero,
+                Quaternion.identity,
+                parent);
+
+            bonusOpt.AddOwner(reward);
+            BonusReward bonusComponenet = reward.GetComponent<BonusReward>();
+            bonusComponenet.SetData(bonusConfig [i].Bg , bonusConfig [i].Icon , newBonusOptionsOrder [i]);
+            i++;
+        }
     }
 }

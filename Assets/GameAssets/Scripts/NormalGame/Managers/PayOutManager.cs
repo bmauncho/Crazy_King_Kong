@@ -78,6 +78,7 @@ public class PayOutManager : MonoBehaviour
         return TotalWinAmount;
     }
 
+
     public double calculateExpectedMultiplier (BoulderType Type)
     {
         foreach(var multiplier in BaseConfig.config)
@@ -100,6 +101,35 @@ public class PayOutManager : MonoBehaviour
                 return weight.weight / selection.GetTotalWeights();
             }
         }
+        return 0;
+    }
+
+    public double calculateBonusPayout (BonusOptions bonusOptions)
+    {
+        string betAmount = betMan_.betAmount;
+
+        double Bet = 1;
+
+        if (double.TryParse(betAmount , out double newBetAmount))
+        {
+            Bet = newBetAmount;
+        }
+
+        double payOut = Bet * calculateExpectedBonusMultiplier(bonusOptions);
+
+        return payOut;
+    }
+
+    public double calculateExpectedBonusMultiplier(BonusOptions option )
+    {
+        foreach(var multiplier in BonusConfig.config)
+        {
+            if (option == multiplier.BonusOptions)
+            {
+                return ( multiplier.minMultiplier + multiplier.maxMultiplier ) / 2;
+            }
+        }
+
         return 0;
     }
 

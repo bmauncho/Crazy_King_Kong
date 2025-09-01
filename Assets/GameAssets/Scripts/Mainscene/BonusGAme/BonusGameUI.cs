@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BonusGameUI : MonoBehaviour
@@ -8,8 +9,6 @@ public class BonusGameUI : MonoBehaviour
     public GameObject content;
     public BonusGameOption selectedOption;
     public BonusGameOption [] options;
-    private Sequence ShowSequence;
-    private Sequence HideSequence;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,7 +33,9 @@ public class BonusGameUI : MonoBehaviour
 
     public IEnumerator showBonusGameUI ()
     {
-        //if(!gamePlayMan_.canShowBonusGame) yield break;
+        if(!gamePlayMan_.canShowBonusGame) yield break;
+
+        gamePlayMan_.bonusGame.setUpBonusRewards ();
         
         ShowBonusGame ();
 
@@ -80,5 +81,21 @@ public class BonusGameUI : MonoBehaviour
     public void hide ()
     {
         StartCoroutine(hideBonusGameUI ());
+    }
+
+    public IEnumerator BonusSequence ()
+    {
+        yield return StartCoroutine(selectedOption.BreakAnimSequence ());
+
+        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine (hideBonusGameUI ());
+
+        BonusGameWinUI bonusGameWinUI = gamePlayMan_.bonusGame.bonusWinUI;
+        BonusOptions bonusOption = selectedOption.TheOwner.GetComponent<BonusReward>().Option;
+        //win visualization
+        yield return StartCoroutine(bonusGameWinUI.showWinAmount(bonusOption));
+        //set is canshowbonusgame to false
+        gamePlayMan_.resetBonusGame();
     }
 }
