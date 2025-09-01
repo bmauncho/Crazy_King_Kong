@@ -85,9 +85,9 @@ public class GameplayManager : MonoBehaviour
         if (!canSkip)
         {
             EnableSkip();
-            return;
         }
-        //Debug.Log("Skip button clicked!");
+
+        Debug.Log("Skip button clicked!");
         StartCoroutine(skip_Boulder());
     }
 

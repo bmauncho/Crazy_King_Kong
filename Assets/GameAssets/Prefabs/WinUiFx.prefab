@@ -146,6 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1489942327464815551}
   - component: {fileID: 6664327198396157159}
+  - component: {fileID: -4024777908903352924}
   m_Layer: 5
   m_Name: WinUiFx
   m_TagString: Untagged
@@ -186,3 +187,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winUIText: {fileID: 8409827961136214645}
+--- !u!225 &-4024777908903352924
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7626915927691841475}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

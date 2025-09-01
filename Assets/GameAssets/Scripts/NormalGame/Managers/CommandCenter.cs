@@ -24,6 +24,7 @@ public class CommandCenter : MonoBehaviour
     public BoulderManager boulderManager_;
     public WinLoseManager winLoseManager_;
     public PayOutManager payOutManager_;
+    public SoundManager soundManager_;
 
     private void Awake ()
     {

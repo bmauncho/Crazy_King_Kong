@@ -156,7 +156,7 @@ public class PayOutManager : MonoBehaviour
             poolMan_.ReturnToPool(PoolType.WinUIFx , winUiFx);
         });
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         HideWinUI();
     }
 

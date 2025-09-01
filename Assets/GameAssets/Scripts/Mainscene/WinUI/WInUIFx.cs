@@ -16,6 +16,8 @@ public class WinUIFx : MonoBehaviour
     public void ShowWinFx (Action OnComplete = null)
     {
         rect = GetComponent<RectTransform>();
+        var canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
 
         payOutMan_ = CommandCenter.Instance.payOutManager_;
         textMan_ = CommandCenter.Instance.textManager_;
@@ -33,7 +35,8 @@ public class WinUIFx : MonoBehaviour
         winSequence.Append(rect.DOScale(1.2f , 0.5f))
                    .Append(rect.DOAnchorPosY(90f , 0.5f))
                    .Join(rect.DOScale(1f , 0.5f))
-                   .AppendInterval(1f)
+                   .Join(canvasGroup.DOFade(0,.5f))
+                   .AppendInterval(.5f)
                    .AppendCallback(() =>
                    {
                        OnComplete?.Invoke();

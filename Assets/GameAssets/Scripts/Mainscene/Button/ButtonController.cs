@@ -11,7 +11,7 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public bool isPersistentGlow;
     public bool isInteractable = true;
 
-    [SerializeField] private bool toggledOn = false;
+    public bool toggledOn = false;
 
     [Header("Sprites")]
     public Sprite baseSprite;
@@ -49,6 +49,12 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
             normalGlow = buttonGlowImage.sprite;
 
         HandleInteractableChanged(isInteractable);
+        SetToggleState(toggledOn);
+    }
+
+    private void Start ()
+    {
+        SetToggleState(toggledOn);
     }
 
     private void Update ()
@@ -78,7 +84,7 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         if (isToggle)
         {
             toggledOn = !toggledOn;
-            UpdateToggleVisuals();
+            HandleToggleOnPointerUp();
         }
         else if (!isPersistentGlow)
         {
@@ -95,7 +101,7 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         if (isPersistentGlow) return;
 
         if (buttonGlowImage != null)
-            buttonGlowImage.sprite = toggledOn ? toggleGlowSprite : normalGlow;
+            buttonGlowImage.sprite = toggledOn ? normalGlow : toggleGlowSprite;
 
         ButtonGlow?.SetActive(true);
         ButtonNormal?.SetActive(false);
@@ -127,7 +133,29 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     private void HandleInteractableChanged ( bool newValue )
     {
         if (buttonNormalImage != null)
-            buttonNormalImage.sprite = newValue ? normalsprite : baseSprite;
+        {
+            if (!isToggle)
+            {
+                buttonNormalImage.sprite = newValue ? normalsprite : baseSprite;
+            }
+        }
+        ButtonGlow?.SetActive(false);
+        ButtonNormal?.SetActive(true);
+    }
+
+    public void HandleToggleOnPointerUp ()
+    {
+        if (buttonNormalImage != null)
+        {
+            if (toggledOn)
+            {
+                buttonNormalImage.sprite = normalsprite;
+            }
+            else
+            {
+                buttonNormalImage.sprite = toggledSprite;
+            }
+        }
 
         ButtonGlow?.SetActive(false);
         ButtonNormal?.SetActive(true);
@@ -135,8 +163,20 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     private void UpdateToggleVisuals ()
     {
+  
         if (buttonNormalImage != null)
-            buttonNormalImage.sprite = toggledOn ? toggledSprite : normalsprite;
+        {
+            if (toggledOn)
+            {
+                Debug.Log("UpdateToggleVisuals -- on");
+                buttonNormalImage.sprite = normalsprite;
+            }
+            else
+            {
+                Debug.Log("UpdateToggleVisuals -- off");
+                buttonNormalImage.sprite = toggledSprite;
+            }
+        }
 
         ButtonGlow?.SetActive(false);
         ButtonNormal?.SetActive(true);

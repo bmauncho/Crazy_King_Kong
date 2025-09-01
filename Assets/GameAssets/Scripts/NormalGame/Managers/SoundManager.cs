@@ -35,6 +35,7 @@ public class SoundManager : MonoBehaviour
 
     public void NormalAmbientSound ()
     {
+
         if (AmbientSound != null)
         {
             AmbientSound.volume = maxSound;

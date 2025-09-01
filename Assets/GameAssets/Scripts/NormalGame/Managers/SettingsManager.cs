@@ -44,6 +44,7 @@ public class SettingsManager : MonoBehaviour
     public void ToogleSound ( bool IsOn )
     {
         Sound = IsOn;
+
         if (IsOn)
         {
             AudioListener.volume = 1;
