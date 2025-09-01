@@ -88,10 +88,6 @@ public class WinLoseManager : MonoBehaviour
         gamePlayMan_.DisableSpin();
         //Debug.Log("Disable - Spin");
         yield return null;
-        BonusGameUI bonusUI = gamePlayMan_.bonusGame.bonusUI;
-        yield return StartCoroutine(bonusUI.showBonusGameUI());
-
-        yield return new WaitUntil(()=> !gamePlayMan_.canShowBonusGame);
 
         if (gamePlayMan_.canAutoSpin)
         {

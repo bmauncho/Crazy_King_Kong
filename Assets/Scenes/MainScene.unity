@@ -3400,7 +3400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winRate: 25
-  bonusGameProbability: 100
+  bonusGameProbability: 25
   smashedVFXPosition: {fileID: 28631848}
 --- !u!1 &488839645
 GameObject:

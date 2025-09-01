@@ -56,7 +56,6 @@ public class BonusGameUI : MonoBehaviour
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
         Debug.Log("Hide anim Done");
-        removeOption();
         HideBonusGame ();
         yield return null;
         Debug.Log("Show bonusreward");
@@ -100,6 +99,7 @@ public class BonusGameUI : MonoBehaviour
         BonusGameWinUI bonusGameWinUI = gamePlayMan_.bonusGame.bonusWinUI;
         BonusOptions bonusOption = selectedOption.TheOwner.GetComponent<BonusReward>().Option;
         Debug.Log($"selected bonusoption - {bonusOption.ToString()}");
+        removeOption();
         //win visualization
         yield return StartCoroutine(bonusGameWinUI.showWinAmount(bonusOption));
         //set is canshowbonusgame to false
