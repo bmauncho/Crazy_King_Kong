@@ -29,10 +29,12 @@ public class SmashEvent : MonoBehaviour
         if (isWin)
         {
             winLoseMan.win();
+            CommandCenter.Instance.soundManager_.PlaySound("UI_Voice7");
         }
         else
         {
             winLoseMan.lose();
+            CommandCenter.Instance.soundManager_.PlaySound("UI_Voice5");
         }
            
         //break effect/wineffect

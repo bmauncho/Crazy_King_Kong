@@ -46,6 +46,8 @@ public class BoulderMovement : MonoBehaviour
             boulderMan.Boulder = owner;
         }
 
+        CommandCenter.Instance.soundManager_.PlaySound("UI_Voice12");
+
         // 2. Shift owners from top to bottom
         for (int i = lastIndex ; i > 0 ; i--)
         {

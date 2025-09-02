@@ -59,7 +59,6 @@ public class GameplayManager : MonoBehaviour
         StartCoroutine(smash());
     }
 
-
     IEnumerator smash ()
     {
         canWin = winLoseMan_.CanWin();
@@ -95,6 +94,7 @@ public class GameplayManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.25f);
         CommandCenter.Instance.boulderManager_.SkipBoulder();
+
     }
 
     public void ToggleSettings ()
@@ -112,13 +112,14 @@ public class GameplayManager : MonoBehaviour
         if (!canAutoSpin)
         {
             canAutoSpin = true;
-
+            CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
             StartAutospinSequence();
         }
         else
         {
             canAutoSpin = false;
             StopAutoSpinSequence();
+            CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
         }
     }
 

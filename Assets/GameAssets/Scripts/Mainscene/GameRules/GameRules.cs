@@ -25,6 +25,7 @@ public class GameRules : MonoBehaviour
     {
         gameObject.SetActive(false);
         CommandCenter.Instance.gamePlayManager_.settingUi.gameObject.SetActive(true);
+        CommandCenter.Instance.soundManager_.PlaySound("UI_Voice2");
     }
 
     public void toggleGameRules ()

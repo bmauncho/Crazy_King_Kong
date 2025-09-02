@@ -60,7 +60,7 @@ public class SettingsUI : MonoBehaviour
         settingsTween = SettingsBtns.DOAnchorPosY(0 , duration).SetEase(Ease.OutBack);
         gamePlayTween = GamePlayBtns.DOAnchorPosY(-200 , duration).SetEase(Ease.InBack);
         betFadeTween = BetAmount.DOFade(0f , duration).SetEase(Ease.OutQuad);
-
+        CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
         yield return DOTween.Sequence()
             .Append(gamePlayTween)
             .Append(settingsTween)
@@ -83,6 +83,8 @@ public class SettingsUI : MonoBehaviour
             .Append(gamePlayTween)
             .Join(betFadeTween)
             .WaitForCompletion();
+
+        CommandCenter.Instance.soundManager_.PlaySound("UI_Voice2");
 
         settingsTween = null;
         gamePlayTween = null;

@@ -38,6 +38,7 @@ public class BetManager : MonoBehaviour
             betAmount = NumberFormatter.FormatString(betAmount,1);
 
             textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
+            CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
         }
     }
     [ContextMenu("Decrease Bet Amount")]
@@ -52,6 +53,7 @@ public class BetManager : MonoBehaviour
             betAmount = NumberFormatter.FormatString(betAmount, 1);
 
             textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
+            CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
         }
     }
     public string GetBetAmount ()
