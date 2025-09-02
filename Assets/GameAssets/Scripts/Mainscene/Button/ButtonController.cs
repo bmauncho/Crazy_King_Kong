@@ -168,12 +168,12 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         {
             if (toggledOn)
             {
-                Debug.Log("UpdateToggleVisuals -- on");
+                //Debug.Log("UpdateToggleVisuals -- on");
                 buttonNormalImage.sprite = normalsprite;
             }
             else
             {
-                Debug.Log("UpdateToggleVisuals -- off");
+                //Debug.Log("UpdateToggleVisuals -- off");
                 buttonNormalImage.sprite = toggledSprite;
             }
         }

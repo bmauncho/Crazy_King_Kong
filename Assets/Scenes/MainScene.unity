@@ -8838,7 +8838,7 @@ MonoBehaviour:
   boulderManager_: {fileID: 1876824754}
   winLoseManager_: {fileID: 479356606}
   payOutManager_: {fileID: 1394378262}
-  soundManager_: {fileID: 0}
+  soundManager_: {fileID: 1695353089}
 --- !u!1 &1204549589
 GameObject:
   m_ObjectHideFlags: 0
@@ -9274,7 +9274,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3654d98ef31dc0149b7324630f500d23, type: 3}
   m_Resource: {fileID: 8300000, guid: 3654d98ef31dc0149b7324630f500d23, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1

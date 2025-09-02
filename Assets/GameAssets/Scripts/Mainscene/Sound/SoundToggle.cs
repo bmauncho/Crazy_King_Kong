@@ -16,6 +16,7 @@ public class SoundToggle : MonoBehaviour
     {
         SettingsManager.Instance.ToogleSound(soundToggle.toggledOn);
         TheSound = SettingsManager.Instance.Sound;
+        CommandCenter.Instance.soundManager_.ToggleAmbientSound();
     }
 
     public void Refresh ()

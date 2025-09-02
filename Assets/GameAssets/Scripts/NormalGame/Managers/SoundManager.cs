@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     private void Start ()
     {
         NormalAmbientSound();
+        ToggleAmbientSound();
     }
 
     [ContextMenu("Rename Sources & Add to list")]
@@ -59,16 +60,6 @@ public class SoundManager : MonoBehaviour
             AmbientSound.Pause();
         }
     }
-
-    public void ShutDownAllAudio ()
-    {
-        for (int i = 0 ; i < PossibleAudioSource.Count ; i++)
-        {
-            PossibleAudioSource [i].Stop();
-            PossibleAudioSource [i].clip = null;
-        }
-    }
-
 
     public void PlayAmbientSound ( string AudioFile )
     {
@@ -135,4 +126,27 @@ public class SoundManager : MonoBehaviour
 
         AmbientSound.UnPause();
     }
+
+    public void ToggleAmbientSound ()
+    {
+        if (SettingsManager.Instance.Sound)
+        {
+            AmbientSound.Play();
+        }
+        else
+        {
+            AmbientSound.Stop();
+        }
+    }
+
+    public void ToggleAllSounds ( bool isOn )
+    {
+        AudioSource [] allSources = FindObjectsOfType<AudioSource>();
+
+        foreach (var source in allSources)
+        {
+            source.mute = !isOn;
+        }
+    }
+
 }

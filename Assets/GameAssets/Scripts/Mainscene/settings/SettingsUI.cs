@@ -78,13 +78,14 @@ public class SettingsUI : MonoBehaviour
         gamePlayTween = GamePlayBtns.DOAnchorPosY(originalGamePlayPos.y , duration).SetEase(Ease.OutBack);
         betFadeTween = BetAmount.DOFade(1f , duration).SetEase(Ease.InQuad);
 
+        CommandCenter.Instance.soundManager_.PlaySound("UI_Voice2");
+
         yield return DOTween.Sequence()
             .Append(settingsTween)
             .Append(gamePlayTween)
             .Join(betFadeTween)
             .WaitForCompletion();
 
-        CommandCenter.Instance.soundManager_.PlaySound("UI_Voice2");
 
         settingsTween = null;
         gamePlayTween = null;
