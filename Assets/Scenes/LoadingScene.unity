@@ -759,7 +759,7 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  isAddressablesEnabled: 0
+  isAddressablesEnabled: 1
   loadingSlider: {fileID: 1267741700}
   isTest: 0
 --- !u!1 &1267741698
