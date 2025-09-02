@@ -23,6 +23,7 @@ public class LoadingScreen : MonoBehaviour
     private bool permissionAsked;
     private bool isSliderLoaded;
     private bool isSceneReady;
+    [SerializeField] private bool isTest;
     private void Awake ()
     {
 
@@ -129,7 +130,7 @@ public class LoadingScreen : MonoBehaviour
             GameManager.Instance.FetchConfigData();
 
             yield return new WaitUntil(() => GameManager.Instance.IsDataFetched());
-
+            if (isTest) yield break;
             Debug.Log($"isDataFetched : {GameManager.Instance.IsDataFetched()}");
             handle.Result.ActivateAsync();
             ConfigMan.Instance.TheDebugObj.SetActive(false);
@@ -170,7 +171,7 @@ public class LoadingScreen : MonoBehaviour
             yield return new WaitUntil(() => isSceneReady);
             GameManager.Instance.FetchConfigData();
             yield return new WaitUntil(() => GameManager.Instance.IsDataFetched());
-
+            if (isTest) yield break;
             handle.allowSceneActivation = true;
 
             while (!handle.isDone)
