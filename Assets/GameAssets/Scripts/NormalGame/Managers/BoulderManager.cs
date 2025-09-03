@@ -6,10 +6,10 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 public enum BoulderType
 {
-    Rock,
-    Lava,
-    Ice,
-    Gold,
+    white,
+    red,
+    blue,
+    gold,
 }
 [System.Serializable]
 public class BoulderTypeConfig
@@ -106,7 +106,7 @@ public class BoulderManager : MonoBehaviour
         if (Boulder == null)
         {
             Debug.LogWarning("Boulder gameobject missing!Defauling to Rock boulder Type");
-            return BoulderType.Rock;
+            return BoulderType.white;
         }
         return Boulder.GetComponent<Boulder>().boulderType;
     }

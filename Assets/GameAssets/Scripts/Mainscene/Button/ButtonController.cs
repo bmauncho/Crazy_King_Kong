@@ -31,7 +31,7 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     private Sprite normalGlow;
     private bool isPointerDown = false;
-    private bool lastInteractableValue;
+    [SerializeField]private bool lastInteractableValue;
 
     private void Awake ()
     {
@@ -50,10 +50,12 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
         HandleInteractableChanged(isInteractable);
         SetToggleState(toggledOn);
+        lastInteractableValue = !isInteractable;
     }
 
     private void Start ()
     {
+        HandleInteractableChanged(isInteractable);
         SetToggleState(toggledOn);
     }
 
