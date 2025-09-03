@@ -67,29 +67,20 @@ public class CurrencyManager : MonoBehaviour
     }
 
 
-    public void CollectWinnings (string winAmount)
+    public void updateCashAmount (string Amount)
     {
-        if (CommandCenter.Instance.IsDemo())
-        {
-            string totalWininings = winAmount;
-            if (double.TryParse(totalWininings , out double winnings))
-            {
-                CashAmount += winnings;
-            }
-        }
+        string totalWininings = Amount;
 
-        string CASHAMOUNT = CashAmount.ToString();
-        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
-        textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
-    }
-
-    public void updateCashOutWinings ()
-    {
-        string totalWininings = "0";
         if (double.TryParse(totalWininings , out double winnings))
         {
-            CashAmount = winnings;
+            CashAmount += winnings;
         }
+
+        if(CashAmount <= 0)
+        {
+            CashAmount = 0;
+        }
+
         string CASHAMOUNT = CashAmount.ToString();
         CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
         textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
@@ -97,6 +88,12 @@ public class CurrencyManager : MonoBehaviour
 
     public bool IsMoneyDepleted ()
     {
-        return CashAmount < 0;
+        string amount = betManager.betAmount;
+        double betAmount = 0;
+        if (double.TryParse(amount , out double newbetAmount))
+        {
+            betAmount = newbetAmount;
+        }
+        return CashAmount < 0  || betAmount>= CashAmount;
     }
 }

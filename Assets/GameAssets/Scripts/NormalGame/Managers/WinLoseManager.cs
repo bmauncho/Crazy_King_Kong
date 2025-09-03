@@ -54,7 +54,7 @@ public class WinLoseManager : MonoBehaviour
         // 3. Add win points or rewards
         gamePlayMan_.DisableWin();
         gamePlayMan_.ResetSpins();
-        currencyMan_.CollectWinnings(payOutMan_.GetWinAmount().ToString());
+        currencyMan_.updateCashAmount(payOutMan_.GetWinAmount().ToString());
         // 4. Refresh boulders (wait for completion)
         yield return StartCoroutine(boulderMan_.skip.refreshBoulders());
         // 5. Enable spin or next round

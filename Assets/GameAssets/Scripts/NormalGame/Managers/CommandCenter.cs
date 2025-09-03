@@ -25,6 +25,7 @@ public class CommandCenter : MonoBehaviour
     public WinLoseManager winLoseManager_;
     public PayOutManager payOutManager_;
     public SoundManager soundManager_;
+    public APIManager apiManager_;
 
     private void Awake ()
     {

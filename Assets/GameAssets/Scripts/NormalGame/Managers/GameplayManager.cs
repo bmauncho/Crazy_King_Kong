@@ -47,6 +47,13 @@ public class GameplayManager : MonoBehaviour
             return;
         }
 
+        if(currencyMan_.IsMoneyDepleted())
+        {
+            Debug.Log("Insufficient balance!");
+            //promt
+            return;
+        }
+
         if (!canSpin)
         {
             EnableSpin();
@@ -114,12 +121,14 @@ public class GameplayManager : MonoBehaviour
             canAutoSpin = true;
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
             StartAutospinSequence();
+            DisableButtons();
         }
         else
         {
             canAutoSpin = false;
             StopAutoSpinSequence();
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
+            EnableButtons();
         }
     }
 
