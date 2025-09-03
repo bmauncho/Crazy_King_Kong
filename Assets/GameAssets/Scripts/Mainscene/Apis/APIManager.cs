@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class APIManager : MonoBehaviour
 {
+    public const string BaseURL = "https://b.api.ibibe.africa";
     [SerializeField] private string Player_Id = string.Empty;
     [SerializeField] private string Game_Id = string.Empty;
     [SerializeField] private string Client_id = string.Empty;
@@ -91,5 +92,10 @@ public class APIManager : MonoBehaviour
     public string GetCashAmount ()
     {
         return CashAmount;
+    }
+
+    public string GetBaseUrl ()
+    {
+        return BaseURL;
     }
 }

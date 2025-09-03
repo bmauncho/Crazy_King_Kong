@@ -38,7 +38,6 @@ public class BoulderCrushAPI : MonoBehaviour
 {
     APIManager apiMan_;
     BoulderManager boulderManager_;
-    private const string BaseURL = "https://b.api.ibibe.africa";
     [Header("Response")]
     public BoulderCrushResponse response;
     public bool IsDone;
@@ -89,7 +88,7 @@ public class BoulderCrushAPI : MonoBehaviour
 
     private IEnumerator crushApi (string jsonData)
     {
-        string ApiUrl = BaseURL + "/crush/crazykingkong";
+        string ApiUrl = apiMan_.GetBaseUrl() + "/crush/crazykingkong";
         using (UnityWebRequest webRequest = new UnityWebRequest(ApiUrl , "POST"))
         {
             byte [] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
