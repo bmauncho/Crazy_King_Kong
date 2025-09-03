@@ -24,7 +24,7 @@ public class WinUIFx : MonoBehaviour
         poolMan_ = CommandCenter.Instance.poolManager_;
 
         string payOut = payOutMan_.GetWinAmount().ToString();
-        payOut = NumberFormatter.FormatString(payOut, 2, true);
+        payOut = NumberFormatter.FormatString(payOut, 2, false);
         textMan_.refreshWinUIText(payOut , winUIText);
 
         // Reset position and scale if reusing from pool

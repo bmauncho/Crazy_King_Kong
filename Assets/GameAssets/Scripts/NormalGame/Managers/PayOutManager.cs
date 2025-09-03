@@ -140,7 +140,7 @@ public class PayOutManager : MonoBehaviour
         TMP_Text winText = winUI.winAmount;
         string winAmount = calculatePayOut(boulderType,spinsToCrush).ToString();
         //Debug.Log("winAmount : " + winAmount);
-        string payOut = NumberFormatter.FormatString(winAmount , 2, true);
+        string payOut = NumberFormatter.FormatString(winAmount , 2, false);
         //Debug.Log(payOut);
         textMan_.refreshWinText(payOut, winText);
 

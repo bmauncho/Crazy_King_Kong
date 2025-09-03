@@ -68,7 +68,7 @@ public class BonusGameWinUI : MonoBehaviour
             currentAmount = Mathf.Lerp(0f , (float)winAmount , (float)t);
 
             string CASHAMOUNT = currentAmount.ToString();
-            CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2,true);
+            CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2,false);
             textMan_.refreshBonusWinUIText(CASHAMOUNT , bonusWinText);
             yield return null;
         }
@@ -78,7 +78,7 @@ public class BonusGameWinUI : MonoBehaviour
 
         // Ensure it ends exactly at winAmount
         string finalAmount = winAmount.ToString();
-        finalAmount = NumberFormatter.FormatString(finalAmount , 2,true);
+        finalAmount = NumberFormatter.FormatString(finalAmount , 2,false);
         textMan_.refreshBonusWinUIText(finalAmount , bonusWinText);
 
         yield return null;
