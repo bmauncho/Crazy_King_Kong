@@ -23,7 +23,7 @@ public class CurrencyManager : MonoBehaviour
             {
                 CashAmount = 2000;
                 string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
                 textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
             else
@@ -35,7 +35,7 @@ public class CurrencyManager : MonoBehaviour
                 }
 
                 string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
                 textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
         }
@@ -61,7 +61,7 @@ public class CurrencyManager : MonoBehaviour
             //PlaceBet
         }
         string CASHAMOUNT = CashAmount.ToString();
-        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
         textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
         yield return null;
     }
@@ -82,7 +82,7 @@ public class CurrencyManager : MonoBehaviour
         }
 
         string CASHAMOUNT = CashAmount.ToString();
-        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2);
+        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
         textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
     }
 
