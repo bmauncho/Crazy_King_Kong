@@ -11,7 +11,7 @@ public class CurrencyManager : MonoBehaviour
     public UserInfo UserInfo;
     public double CashAmount;
     public double winAmount;
-    TMP_Text walletAmountText;
+    public TMP_Text walletAmountText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -65,17 +65,21 @@ public class CurrencyManager : MonoBehaviour
             {
                 Debug.LogWarning($"Invalid bet amount: {betAmount}");
             }
+            string CASHAMOUNT = CashAmount.ToString();
+            CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+            textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
         }
         else
         {
             //PlaceBet
             apiMan_.placeBet.Bet();
-            yield return new WaitUntil(() => apiMan_.placeBet.IsDone);
-            CashAmount = (double)apiMan_.placeBet.betResponse.new_wallet_balance;
+            //yield return new WaitUntil(() => apiMan_.placeBet.IsDone);
+            //CashAmount = (double)apiMan_.placeBet.betResponse.new_wallet_balance;
+            //string CASHAMOUNT = CashAmount.ToString();
+            //CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+            //textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
         }
-        string CASHAMOUNT = CashAmount.ToString();
-        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
-        textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
+
         yield return null;
     }
 

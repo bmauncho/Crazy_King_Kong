@@ -42,6 +42,7 @@ public class PlaceBet : MonoBehaviour
     APIManager apiMan_;
     BetManager betManager_;
     CurrencyManager currencyMan_;
+    TextManager textMan_;
     [Header("Api Reference")]
     private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
     public BetResponse betResponse;
@@ -60,6 +61,7 @@ public class PlaceBet : MonoBehaviour
         apiMan_ = CommandCenter.Instance.apiManager_;
         betManager_ = CommandCenter.Instance.betManager_;
         currencyMan_ = CommandCenter.Instance.currencyManager_;
+        textMan_ = CommandCenter.Instance.textManager_;
         configureIds();
     }
     private void configureIds ()
@@ -124,6 +126,11 @@ public class PlaceBet : MonoBehaviour
                 Debug.Log($"Bet placed successfully:{formattedOutput}");
                 double CashAmount = betResponse.new_wallet_balance;
                 IsDone = true;
+
+                currencyMan_.CashAmount = (double)betResponse.new_wallet_balance;
+                string CASHAMOUNT = CashAmount.ToString();
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+                textMan_.refreshWalletText(CASHAMOUNT , currencyMan_.walletAmountText);
             }
         }
     }

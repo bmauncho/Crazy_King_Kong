@@ -71,10 +71,10 @@ public class WinLoseManager : MonoBehaviour
         }
 
 
+        gamePlayMan_.DisableSpin();
         // 4. Refresh boulders (wait for completion)
         yield return StartCoroutine(boulderMan_.skip.refreshBoulders());
         // 5. Enable spin or next round
-        gamePlayMan_.DisableSpin();
         // Coroutine ends
         yield return null;
 
