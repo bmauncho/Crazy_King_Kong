@@ -121,7 +121,7 @@ public class BonusGameWinUI : MonoBehaviour
     [ContextMenu("Test")]
     public void Test ()
     {
-        StartCoroutine(showWinAmount(BonusOptions.Silver));
+        StartCoroutine(showWinAmount(BonusOptions.silver));
     }
 
 }

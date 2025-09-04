@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
+    APIManager apiMan_;
     BetManager betManager;
     TextManager textManager_;
     public UserInfo UserInfo;
@@ -17,28 +18,37 @@ public class CurrencyManager : MonoBehaviour
         betManager = CommandCenter.Instance.betManager_;
         walletAmountText = UserInfo.walletAmount;
         textManager_= CommandCenter.Instance.textManager_;
+        apiMan_ =CommandCenter.Instance.apiManager_ ;
+        StartCoroutine(setupCurrency());
+    }
+
+    IEnumerator setupCurrency ()
+    {
+        yield return new WaitUntil(() => GameManager.Instance);
         if (CommandCenter.Instance)
         {
             if (CommandCenter.Instance.gameMode == GameMode.Demo)
             {
                 CashAmount = 2000;
                 string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
                 textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
             else
             {
-                string cashamount = "0";
+                string cashamount = GameManager.Instance.GetCashAmount();
                 if (double.TryParse(cashamount , out double amount))
                 {
                     CashAmount += amount;
                 }
 
                 string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
+                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
                 textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
         }
+
+        yield return null;
     }
 
     public IEnumerator Bet ()
@@ -59,6 +69,9 @@ public class CurrencyManager : MonoBehaviour
         else
         {
             //PlaceBet
+            apiMan_.placeBet.Bet();
+            yield return new WaitUntil(() => apiMan_.placeBet.IsDone);
+            CashAmount = (double)apiMan_.placeBet.betResponse.new_wallet_balance;
         }
         string CASHAMOUNT = CashAmount.ToString();
         CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
@@ -70,13 +83,22 @@ public class CurrencyManager : MonoBehaviour
     public void updateCashAmount (string Amount)
     {
         string totalWininings = Amount;
-
-        if (double.TryParse(totalWininings , out double winnings))
+        if (CommandCenter.Instance.IsDemo())
         {
-            CashAmount += winnings;
+            if (double.TryParse(totalWininings , out double winnings))
+            {
+                CashAmount += winnings;
+            }
+        }
+        else
+        {
+            if (double.TryParse(totalWininings , out double winnings))
+            {
+                CashAmount = winnings;
+            }
         }
 
-        if(CashAmount <= 0)
+        if (CashAmount <= 0)
         {
             CashAmount = 0;
         }
@@ -85,6 +107,7 @@ public class CurrencyManager : MonoBehaviour
         CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
         textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
     }
+
 
     public bool IsMoneyDepleted ()
     {

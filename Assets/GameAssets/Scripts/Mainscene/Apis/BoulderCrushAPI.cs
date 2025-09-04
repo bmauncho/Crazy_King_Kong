@@ -25,7 +25,7 @@ public class BoulderCrushResponse
     public double multiplier;
     public double win_amount;
     public bool bonus_triggered;
-    public BonusBoulders available_stones;
+    public BonusBoulders[] available_stones;
 }
 
 [System.Serializable]
@@ -82,8 +82,8 @@ public class BoulderCrushAPI : MonoBehaviour
         };
 
         string jsonData = JsonConvert.SerializeObject(request , settings);
-        Debug.Log($"Start api request:{jsonData}");
-        StartCoroutine( jsonData );
+        Debug.Log($"Smash api request:{jsonData}");
+        StartCoroutine(crushApi(jsonData));
     }
 
     private IEnumerator crushApi (string jsonData)
@@ -108,7 +108,7 @@ public class BoulderCrushAPI : MonoBehaviour
                 response = JsonConvert.DeserializeObject<BoulderCrushResponse>(responseText);
                 var parsedJson = JToken.Parse(responseText);
                 string formattedOutput = JsonConvert.SerializeObject(parsedJson , Formatting.Indented);
-                Debug.Log($"Start api response:{formattedOutput}");
+                Debug.Log($"smash api response:{formattedOutput}");
                 IsDone = true;
             }
         }

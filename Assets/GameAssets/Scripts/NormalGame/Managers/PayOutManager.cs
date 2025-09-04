@@ -34,6 +34,7 @@ public class BonusPayOutConfig
 }
 public class PayOutManager : MonoBehaviour
 {
+    APIManager apiMan_;
     BoulderManager boulderMan_;
     BetManager betMan_;
     TextManager textMan_;
@@ -48,6 +49,8 @@ public class PayOutManager : MonoBehaviour
 
     public GameObject WinUIFx_SpawnPos;
 
+    public double winAmount;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,6 +59,7 @@ public class PayOutManager : MonoBehaviour
         textMan_ = CommandCenter.Instance.textManager_;
         gameplayMan_ = CommandCenter.Instance.gamePlayManager_;
         poolMan_ = CommandCenter.Instance.poolManager_;
+        apiMan_ = CommandCenter.Instance.apiManager_;
     }
 
     public double calculatePayOut (BoulderType Type,double spinsToCrush)
@@ -136,12 +140,23 @@ public class PayOutManager : MonoBehaviour
     public IEnumerator ShowWin (BoulderType boulderType)
     {
         winUI.ShowWinUI();
-        double spinsToCrush = gameplayMan_.spins;
+        string payOut = "";
+        string winAmount = "";
         TMP_Text winText = winUI.winAmount;
-        string winAmount = calculatePayOut(boulderType,spinsToCrush).ToString();
-        //Debug.Log("winAmount : " + winAmount);
-        string payOut = NumberFormatter.FormatString(winAmount , 2, false);
+        if (CommandCenter.Instance.IsDemo())
+        {
+            double spinsToCrush = gameplayMan_.spins;
+            winAmount = calculatePayOut(boulderType , spinsToCrush).ToString();
+            //Debug.Log("winAmount : " + winAmount);
+        }
+        else
+        {
+            winAmount = apiMan_.boulderCrushAPI.response.win_amount.ToString();
+        }
+        
+        payOut = NumberFormatter.FormatString(winAmount , 2, false);
         //Debug.Log(payOut);
+        setWinAmount(payOut);
         textMan_.refreshWinText(payOut, winText);
 
         GameObject winUiFx = poolMan_.GetFromPool(
@@ -165,9 +180,17 @@ public class PayOutManager : MonoBehaviour
         winUI.HideWinUI();
     }
 
+    void setWinAmount (string amount)
+    {
+        if(double.TryParse(amount, out var newWinAmount))
+        {
+            winAmount = newWinAmount;
+        }
+    }
+
     public double GetWinAmount ()
     {
-        return TotalWinAmount;
+        return winAmount;
     }
 
 }

@@ -12,7 +12,7 @@ public class BonusApiRequest
     public string player_id;
     public string bet_id;
     public double bet_amount;
-    public string boulder_type;
+    public string stone_type;
 }
 
 [System.Serializable]
@@ -26,7 +26,7 @@ public class BonusApiResponse
 public class BonusApi : MonoBehaviour
 {
     APIManager apiMan_;
-    BoulderManager boulderMan_;
+    GameplayManager gameplayMan_;
     [Header("Response")]
     public BonusApiResponse response;
     public bool IsDone;
@@ -34,7 +34,7 @@ public class BonusApi : MonoBehaviour
     void Start()
     {
         apiMan_ = CommandCenter.Instance.apiManager_;
-        boulderMan_ = CommandCenter.Instance.boulderManager_;
+        gameplayMan_ = CommandCenter.Instance.gamePlayManager_;
     }
 
     // Update is called once per frame
@@ -57,8 +57,8 @@ public class BonusApi : MonoBehaviour
         {
             betAmount = newBetAMount;
         }
-
-        string boulderType = boulderMan_.Boulder.GetComponent<Boulder>().boulderType.ToString();
+        
+        string optionType = gameplayMan_.bonusGame.bonusUI.selectedOption.TheOwner.GetComponent<BonusReward>().Option.ToString();
 
         BonusApiRequest request = new BonusApiRequest
         {
@@ -67,16 +67,16 @@ public class BonusApi : MonoBehaviour
             player_id = apiMan_.GetPlayerId() ,
             bet_id = apiMan_.GetBetId() ,
             bet_amount = newBetAMount ,
-            boulder_type = boulderType ,
+            stone_type = optionType ,
         };
 
 
         string jsonData = JsonConvert.SerializeObject(request , settings);
-        Debug.Log($"Start api request:{jsonData}");
-        StartCoroutine(jsonData);
+        Debug.Log($"Bonus api request:{jsonData}");
+        StartCoroutine(bonusApi(jsonData));
     }
 
-    private IEnumerator crushApi ( string jsonData )
+    private IEnumerator bonusApi ( string jsonData )
     {
         string ApiUrl = apiMan_.GetBaseUrl() + "/bonus/crazykingkong";
         using (UnityWebRequest webRequest = new UnityWebRequest(ApiUrl , "POST"))
@@ -98,7 +98,7 @@ public class BonusApi : MonoBehaviour
                 response = JsonConvert.DeserializeObject<BonusApiResponse>(responseText);
                 var parsedJson = JToken.Parse(responseText);
                 string formattedOutput = JsonConvert.SerializeObject(parsedJson , Formatting.Indented);
-                Debug.Log($"Start api response:{formattedOutput}");
+                Debug.Log($"Bonus api response:{formattedOutput}");
                 IsDone = true;
             }
         }

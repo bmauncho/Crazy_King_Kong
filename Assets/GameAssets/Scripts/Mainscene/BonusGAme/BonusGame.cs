@@ -1,14 +1,16 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum BonusOptions
 {
-    Gold,
-    Silver,
-    Bronze,
+    gold,
+    silver,
+    bronze,
 }
 
 [System.Serializable]
@@ -21,6 +23,7 @@ public class BonusGameConfig
 
 public class BonusGame : MonoBehaviour
 {
+    APIManager apiMan_;
     PoolManager poolMan_;
     public BonusGameUI bonusUI;
     public BonusGameWinUI bonusWinUI;
@@ -29,6 +32,7 @@ public class BonusGame : MonoBehaviour
     private void Start ()
     {
         poolMan_ = CommandCenter.Instance.poolManager_;
+        apiMan_ = CommandCenter.Instance.apiManager_;
     }
     public  void restBonusOptions ()
     {
@@ -41,7 +45,6 @@ public class BonusGame : MonoBehaviour
         // Reset the list
         restBonusOptions();
 
-        // Step 1: Get all enum values
         List<BonusOptions> options = new List<BonusOptions>((BonusOptions [])System.Enum.GetValues(typeof(BonusOptions)));
 
         // Step 2: Shuffle the list using Fisher-Yates algorithm
@@ -51,15 +54,8 @@ public class BonusGame : MonoBehaviour
             (options [i], options [randIndex]) = (options [randIndex], options [i]);
         }
 
-        // Step 3: Store the shuffled result
         newBonusOptionsOrder.AddRange(options);
 
-        // Optional Debug
-        Debug.Log("Randomized Bonus Options:");
-        foreach (var opt in newBonusOptionsOrder)
-        {
-            Debug.Log(opt);
-        }
     }
 
     public void setUpBonusRewards ()

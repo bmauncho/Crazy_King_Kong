@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class WinLoseManager : MonoBehaviour
 {
+    APIManager apiMan_;
     GameplayManager gamePlayMan_;
     BoulderManager boulderMan_;
     PoolManager poolMan_;
@@ -22,6 +23,7 @@ public class WinLoseManager : MonoBehaviour
         poolMan_= CommandCenter.Instance.poolManager_;
         payOutMan_ = CommandCenter.Instance.payOutManager_;
         currencyMan_ = CommandCenter.Instance.currencyManager_;
+        apiMan_ = CommandCenter.Instance.apiManager_;
     }
 
     public bool CanWin ()
@@ -54,7 +56,21 @@ public class WinLoseManager : MonoBehaviour
         // 3. Add win points or rewards
         gamePlayMan_.DisableWin();
         gamePlayMan_.ResetSpins();
-        currencyMan_.updateCashAmount(payOutMan_.GetWinAmount().ToString());
+
+        if (CommandCenter.Instance.IsDemo())
+        {
+            currencyMan_.updateCashAmount(payOutMan_.GetWinAmount().ToString());
+        } 
+        else
+        {
+            //update winamount
+            apiMan_.updateBet.SetAmountWon(payOutMan_.GetWinAmount());
+            apiMan_.updateBet.UpdateTheBet();
+            yield return new WaitUntil(() => apiMan_.updateBet.isUpdated);
+            currencyMan_.updateCashAmount(apiMan_.updateBet.new_wallet_balance.ToString());
+        }
+
+
         // 4. Refresh boulders (wait for completion)
         yield return StartCoroutine(boulderMan_.skip.refreshBoulders());
         // 5. Enable spin or next round

@@ -53,6 +53,7 @@ public class PlaceBet : MonoBehaviour
     public string Client_id = "12345";
     public string bet_id;
     public float BetAmount;
+    public bool IsDone = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start ()
     {
@@ -81,6 +82,7 @@ public class PlaceBet : MonoBehaviour
     [ContextMenu("Place Bet")]
     public void Bet ()
     {
+        IsDone = false;
         apiMan_.SetBetId();
         bet_id = apiMan_.GetBetId();
         apiMan_.SetBetAmount(BetAmount.ToString());
@@ -111,6 +113,8 @@ public class PlaceBet : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError("Error: " + webRequest.error);
+                IsDone = true;
+                PromptManager.Instance.ShowErrorPrompt(webRequest.result.ToString() , webRequest.error);
             }
             else
             {
@@ -119,7 +123,7 @@ public class PlaceBet : MonoBehaviour
                 string formattedOutput = JsonConvert.SerializeObject(webRequest.downloadHandler.text , Formatting.Indented);
                 Debug.Log($"Bet placed successfully:{formattedOutput}");
                 double CashAmount = betResponse.new_wallet_balance;
-                currencyMan_.updateCashAmount(CashAmount.ToString());
+                IsDone = true;
             }
         }
     }

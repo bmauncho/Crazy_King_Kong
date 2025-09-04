@@ -12,6 +12,8 @@ public class APIManager : MonoBehaviour
     [SerializeField] private string BetAmount = string.Empty;
     public PlaceBet placeBet;
     public UpdateBet updateBet;
+    public BoulderCrushAPI boulderCrushAPI;
+    public BonusApi bonusApi;
     public TMP_Text transactiontext;
     public TMP_Text demoText;
     private void Awake ()
@@ -55,7 +57,7 @@ public class APIManager : MonoBehaviour
 
     public string SetBetId ()
     {
-        string betId = ConfigMan.Instance.GetBetId();
+        string betId = ConfigMan.Instance.GetBetId_NoDash();
         BetId = betId;
         return BetId;
     }

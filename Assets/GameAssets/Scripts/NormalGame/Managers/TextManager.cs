@@ -10,6 +10,7 @@ public enum TextType
     WalletText,
     WinUIText,
     BonusWinUiText,
+    BonusUiMultiplierText,
 }
 
 [System.Serializable]
@@ -27,7 +28,8 @@ public class TextManager : MonoBehaviour
     public List<(string actual, string available)> charRefrences = new List<(string actual, string available)>
     {
         (".","fullstop"),
-        (",", "comma")
+        (",", "comma"),
+        ("x","X")
     };
 
     private void RefreshNumbersText (
@@ -121,6 +123,21 @@ public class TextManager : MonoBehaviour
     public void refreshBonusWinUIText ( string Input , TMP_Text text )
     {
         TextInfo info = TextInfo(TextType.BonusWinUiText);
+        if (info != null)
+        {
+            RefreshNumbersText(
+                Input ,
+                info.prefix ,
+                text ,
+                info.spriteAsset ,
+                charRefrences
+            );
+        }
+    }
+
+    public void refreshBonusMultiplierUIText ( string Input , TMP_Text text )
+    {
+        TextInfo info = TextInfo(TextType.BonusUiMultiplierText);
         if (info != null)
         {
             RefreshNumbersText(

@@ -1,18 +1,25 @@
 using DG.Tweening;
+using System;
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class BonusGameUI : MonoBehaviour
 {
     GameplayManager gamePlayMan_;
+    APIManager apiMan_;
+    TextManager textMan_;
     public GameObject content;
     public BonusGameOption selectedOption;
     public BonusGameOption [] options;
+    public TMP_Text multiplierText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gamePlayMan_ = CommandCenter.Instance.gamePlayManager_;
+        apiMan_ = CommandCenter.Instance.apiManager_;
+        textMan_ = CommandCenter.Instance.textManager_;
     }
 
     // Update is called once per frame
@@ -48,7 +55,7 @@ public class BonusGameUI : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator hideBonusGameUI ()
+    public IEnumerator hideBonusGameUI (Action HideMultiplier =null)
     {
         Animator anim = content.GetComponent<Animator>();
         anim.Rebind();
@@ -56,6 +63,7 @@ public class BonusGameUI : MonoBehaviour
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
         Debug.Log("Hide anim Done");
+        HideMultiplier?.Invoke();
         HideBonusGame ();
         yield return null;
         Debug.Log("Show bonusreward");
@@ -77,6 +85,7 @@ public class BonusGameUI : MonoBehaviour
     {
         StartCoroutine(showBonusGameUI ());
     }
+
     [ContextMenu("Hide - Test")]
     public void hide ()
     {
@@ -92,9 +101,15 @@ public class BonusGameUI : MonoBehaviour
     {
         yield return StartCoroutine(selectedOption.BreakAnimSequence ());
 
+        //show multiplier
+        showMultiplier();
         yield return new WaitForSeconds(1f);
 
-        yield return StartCoroutine (hideBonusGameUI ());
+        yield return StartCoroutine (hideBonusGameUI(() =>
+        {
+            hideMultiplier();
+        }));
+
         Debug.Log("Show_BonusWin ");
         BonusGameWinUI bonusGameWinUI = gamePlayMan_.bonusGame.bonusWinUI;
         BonusOptions bonusOption = selectedOption.TheOwner.GetComponent<BonusReward>().Option;
@@ -104,5 +119,17 @@ public class BonusGameUI : MonoBehaviour
         yield return StartCoroutine(bonusGameWinUI.showWinAmount(bonusOption));
         //set is canshowbonusgame to false
         gamePlayMan_.resetBonusGame();
+    }
+
+    void showMultiplier ()
+    {
+        multiplierText.gameObject.SetActive(true);
+        string multiplier = apiMan_.bonusApi.response.multiplier +"x";
+        textMan_.refreshBonusMultiplierUIText(multiplier , multiplierText);
+    }
+
+    public void hideMultiplier ()
+    {
+        multiplierText.gameObject.SetActive(false);
     }
 }

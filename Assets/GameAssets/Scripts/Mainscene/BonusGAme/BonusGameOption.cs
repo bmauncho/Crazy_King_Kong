@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BonusGameOption : MonoBehaviour
 {
+    APIManager apiMan_;
     public GameObject BonusItem;
     public GameObject BreakAnim;
     public GameObject BonusReward;
@@ -20,6 +21,7 @@ public class BonusGameOption : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        apiMan_ = CommandCenter.Instance.apiManager_;
         resetBonusOption();
         StartCoroutine(Glow());
     }
@@ -85,6 +87,13 @@ public class BonusGameOption : MonoBehaviour
 
             BreakAnim.SetActive(false);
         }
+
+        if (!CommandCenter.Instance.IsDemo())
+        {
+            apiMan_.bonusApi.BonusGame();
+            yield return new WaitUntil(() => apiMan_.bonusApi.IsDone);
+        }
+
         yield return new WaitForSeconds(1.5f);
     }
 

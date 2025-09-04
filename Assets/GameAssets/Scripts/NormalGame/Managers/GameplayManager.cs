@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
+    APIManager apiMan_;
     WinLoseManager winLoseMan_;
     CurrencyManager currencyMan_;
     public SettingsUI settingUi;
@@ -25,6 +26,7 @@ public class GameplayManager : MonoBehaviour
     {
         winLoseMan_ = CommandCenter.Instance.winLoseManager_;
         currencyMan_ = CommandCenter.Instance.currencyManager_;
+        apiMan_ = CommandCenter.Instance.apiManager_;
     }
 
     // Update is called once per frame
@@ -35,6 +37,12 @@ public class GameplayManager : MonoBehaviour
 
     public void spin ()
     {
+        if (canShowBonusGame)
+        {
+            Debug.LogWarning("Bonus game in play unable to spin ");
+            return;
+        }
+
         if (canSpin)
         {
             Debug.LogWarning("Already Spinning!");
@@ -59,18 +67,30 @@ public class GameplayManager : MonoBehaviour
             EnableSpin();
         }
 
-        IncreaseSpins();
-        canWin = winLoseMan_.CanWin();
-        canShowBonusGame = winLoseMan_.CanShowBonusGame(canWin);
+        if (CommandCenter.Instance.IsDemo())
+        {
+            IncreaseSpins();
+            canWin = winLoseMan_.CanWin();
+            canShowBonusGame = winLoseMan_.CanShowBonusGame(canWin);
+        }
 
         StartCoroutine(smash());
     }
 
     IEnumerator smash ()
     {
-        canWin = winLoseMan_.CanWin();
         yield return StartCoroutine(currencyMan_.Bet());
-        yield return new WaitForSeconds(.25f);
+
+        if (!CommandCenter.Instance.IsDemo())
+        {
+            apiMan_.boulderCrushAPI.crushBoulder();
+            yield return new WaitUntil(() => apiMan_.boulderCrushAPI.IsDone);
+            canWin = apiMan_.boulderCrushAPI.response.boulder_broken;
+            canShowBonusGame = apiMan_.boulderCrushAPI.response.bonus_triggered;
+        }
+
+        yield return null;
+
         CommandCenter.Instance.boulderManager_.SmashBoulder();
     }
 
