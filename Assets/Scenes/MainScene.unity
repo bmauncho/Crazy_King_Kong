@@ -3643,6 +3643,7 @@ MonoBehaviour:
     message: 
     boulder_type: 
     multiplier: 
+    win_amount: 0
   IsDone: 0
 --- !u!1 &439865608
 GameObject:
@@ -12684,6 +12685,7 @@ MonoBehaviour:
   UserInfo: {fileID: 978361888}
   CashAmount: 0
   winAmount: 0
+  walletAmountText: {fileID: 0}
 --- !u!4 &1577311423
 Transform:
   m_ObjectHideFlags: 0

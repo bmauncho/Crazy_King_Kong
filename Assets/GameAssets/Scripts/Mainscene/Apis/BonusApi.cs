@@ -22,6 +22,7 @@ public class BonusApiResponse
     public string message;
     public string boulder_type;
     public string multiplier;
+    public double win_amount;
 }
 public class BonusApi : MonoBehaviour
 {

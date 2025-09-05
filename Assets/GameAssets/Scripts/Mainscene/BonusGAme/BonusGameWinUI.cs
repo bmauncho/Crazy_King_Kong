@@ -7,6 +7,7 @@ public class BonusGameWinUI : MonoBehaviour
 {
     TextManager textMan_;
     PayOutManager payOutMan_;
+    APIManager apiMan_;
     public Image BigWin;
     public double winAmount;
     public TMP_Text bonusWinText;
@@ -21,6 +22,7 @@ public class BonusGameWinUI : MonoBehaviour
     {
         textMan_ = CommandCenter.Instance.textManager_;
         payOutMan_ = CommandCenter.Instance.payOutManager_;
+        apiMan_ = CommandCenter.Instance.apiManager_;
     }
 
     // Update is called once per frame
@@ -54,8 +56,15 @@ public class BonusGameWinUI : MonoBehaviour
 
         double currentAmount = 0;
         float elapsed = 0;
-
-        double bonusWinAmount = payOutMan_.calculateBonusPayout(bonusOptions);
+        double bonusWinAmount = 0;
+        if (CommandCenter.Instance.IsDemo())
+        {
+            bonusWinAmount = payOutMan_.calculateBonusPayout(bonusOptions);
+        }
+        else
+        {
+            bonusWinAmount = apiMan_.bonusApi.response.win_amount;
+        }
 
         setWinAmount(bonusWinAmount);
 
