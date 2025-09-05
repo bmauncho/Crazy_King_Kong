@@ -121,6 +121,6 @@ public class CurrencyManager : MonoBehaviour
         {
             betAmount = newbetAmount;
         }
-        return CashAmount < 0  || betAmount>= CashAmount;
+        return CashAmount < 0  || betAmount > CashAmount;
     }
 }

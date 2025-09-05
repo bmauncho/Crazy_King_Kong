@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +58,7 @@ public class GameplayManager : MonoBehaviour
 
         if(currencyMan_.IsMoneyDepleted())
         {
+            PromptManager.Instance.ShowErrorPrompt("Error 404" , "Insufficient balance!");
             Debug.Log("Insufficient balance!");
             //promt
             return;
