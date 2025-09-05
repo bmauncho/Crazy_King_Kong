@@ -8,6 +8,7 @@ public class BonusGameWinUI : MonoBehaviour
     TextManager textMan_;
     PayOutManager payOutMan_;
     APIManager apiMan_;
+    CurrencyManager currencyMan_;
     public Image BigWin;
     public double winAmount;
     public TMP_Text bonusWinText;
@@ -16,13 +17,14 @@ public class BonusGameWinUI : MonoBehaviour
     [SerializeField] private float duration = 2f; // duration of the animation in seconds
     private Sequence bounceSequence;
     private Sequence hideSequence;
-
+    double bonus_WinAmount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         textMan_ = CommandCenter.Instance.textManager_;
         payOutMan_ = CommandCenter.Instance.payOutManager_;
         apiMan_ = CommandCenter.Instance.apiManager_;
+        currencyMan_ = CommandCenter.Instance.currencyManager_;
     }
 
     // Update is called once per frame
@@ -65,6 +67,8 @@ public class BonusGameWinUI : MonoBehaviour
         {
             bonusWinAmount = apiMan_.bonusApi.response.win_amount;
         }
+
+        bonus_WinAmount = bonusWinAmount;
 
         setWinAmount(bonusWinAmount);
 
@@ -124,6 +128,19 @@ public class BonusGameWinUI : MonoBehaviour
         setWinAmount(0);
         yield return null;
         hideSequence = null;
+
+        if (CommandCenter.Instance.IsDemo())
+        {
+            currencyMan_.updateCashAmount(bonus_WinAmount.ToString());
+        }
+        else
+        {
+            apiMan_.updateBet.SetAmountWon(apiMan_.bonusApi.response.win_amount);
+            apiMan_.updateBet.UpdateTheBet();
+            yield return new WaitUntil(() => apiMan_.updateBet.isUpdated);
+            currencyMan_.updateCashAmount(apiMan_.updateBet.new_wallet_balance.ToString());
+        }
+
         HideWinUI();
     }
 

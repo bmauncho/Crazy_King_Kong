@@ -62,9 +62,10 @@ public class BoulderManager : MonoBehaviour
                     boulder.transform.localPosition = Vector3.zero;
 
                     pos.AddOwner(boulder);
-
-                    boulder.GetComponent<Boulder>().SetBoulderType(selection.GetRandomBoulderTypeConfig().type);
-                    boulder.GetComponent<Boulder>().SetBoulderSprite(selection.GetRandomBoulderTypeConfig().boulder);
+                    BoulderTypeConfig newConfig = selection.GetRandomBoulderTypeConfig();
+                   // Debug.Log($"type : {newConfig.type.ToString()} ");
+                    boulder.GetComponent<Boulder>().SetBoulderType(newConfig.type);
+                    boulder.GetComponent<Boulder>().SetBoulderSprite(newConfig.boulder);
 
                 }
             }
@@ -80,6 +81,10 @@ public class BoulderManager : MonoBehaviour
 
         smashPos.AddOwner(smashBoulder);
         Boulder = smashBoulder;
+        BoulderTypeConfig config = selection.GetRandomBoulderTypeConfig();
+        //Debug.Log($"type : {config.type.ToString()} ");
+        Boulder.GetComponent<Boulder>().SetBoulderType(config.type);
+        Boulder.GetComponent<Boulder>().SetBoulderSprite(config.boulder);
     }
 
     public void SmashBoulder ()

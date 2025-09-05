@@ -10,6 +10,7 @@ public class BonusGameUI : MonoBehaviour
     GameplayManager gamePlayMan_;
     APIManager apiMan_;
     TextManager textMan_;
+    PayOutManager payOutMan_;
     public GameObject content;
     public BonusGameOption selectedOption;
     public BonusGameOption [] options;
@@ -20,6 +21,7 @@ public class BonusGameUI : MonoBehaviour
         gamePlayMan_ = CommandCenter.Instance.gamePlayManager_;
         apiMan_ = CommandCenter.Instance.apiManager_;
         textMan_ = CommandCenter.Instance.textManager_;
+        payOutMan_ = CommandCenter.Instance.payOutManager_;
     }
 
     // Update is called once per frame
@@ -124,7 +126,18 @@ public class BonusGameUI : MonoBehaviour
     void showMultiplier ()
     {
         multiplierText.gameObject.SetActive(true);
-        string multiplier = apiMan_.bonusApi.response.multiplier +"x";
+        string multiplier = "";
+
+        if (CommandCenter.Instance.IsDemo())
+        {
+            BonusOptions bonusOption = selectedOption.TheOwner.GetComponent<BonusReward>().Option;
+            multiplier = payOutMan_.calculateExpectedBonusMultiplier(bonusOption).ToString() + "x";
+        }
+        else
+        {
+            multiplier = apiMan_.bonusApi.response.multiplier + "x";
+        }
+           
         textMan_.refreshBonusMultiplierUIText(multiplier , multiplierText);
     }
 

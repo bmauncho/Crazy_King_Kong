@@ -59,7 +59,9 @@ public class WinLoseManager : MonoBehaviour
 
         if (CommandCenter.Instance.IsDemo())
         {
+            Debug.Log($"current winAmount{currencyMan_.CashAmount}");
             currencyMan_.updateCashAmount(payOutMan_.GetWinAmount().ToString());
+            Debug.Log($"new winAmount{currencyMan_.CashAmount}");
         } 
         else
         {

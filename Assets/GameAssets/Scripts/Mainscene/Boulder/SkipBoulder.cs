@@ -20,7 +20,7 @@ public class SkipBoulder : MonoBehaviour
         yield return StartCoroutine(refreshBoulders(() =>
         {
             boulderMan.IsSkip = false;
-            Debug.Log("Skip IsDone");
+            //Debug.Log("Skip IsDone");
             gameplayMan_.DisableSkip();
         }));
 

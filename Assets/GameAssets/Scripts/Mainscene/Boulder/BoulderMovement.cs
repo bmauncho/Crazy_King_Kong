@@ -76,8 +76,9 @@ public class BoulderMovement : MonoBehaviour
             var newBoulder = spawner.spawnBall();
             newBoulder.transform.SetParent(bottom.transform);
             BoulderSelection selection = CommandCenter.Instance.boulderManager_.selection;
-            newBoulder.GetComponent<Boulder>().SetBoulderType(selection.GetRandomBoulderTypeConfig().type);
-            newBoulder.GetComponent<Boulder>().SetBoulderSprite(selection.GetRandomBoulderTypeConfig().boulder);
+            BoulderTypeConfig config = selection.GetRandomBoulderTypeConfig();
+            newBoulder.GetComponent<Boulder>().SetBoulderType(config.type);
+            newBoulder.GetComponent<Boulder>().SetBoulderSprite(config.boulder);
 
             Tween spawnTween = newBoulder.transform.DOMove(bottom.transform.position , moveDuration)
                 .SetEase(Ease.InQuad);
