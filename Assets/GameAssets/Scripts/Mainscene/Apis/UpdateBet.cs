@@ -47,7 +47,7 @@ public class UpdateBet : MonoBehaviour
             client_id = apiMan_.GetClientId() ,
         };
         string jsonData = JsonUtility.ToJson(updateBetRequest , true);
-        Debug.Log("Update Bet payload" + jsonData);
+       //Debug.Log("Update Bet payload" + jsonData);
         StartCoroutine(UpdateBetCoroutine(jsonData));
     }
 
@@ -70,7 +70,7 @@ public class UpdateBet : MonoBehaviour
             {
                 updateBetResponse = JsonUtility.FromJson<UpdateBetResponse>(webRequest.downloadHandler.text);
                 string formattedOutput = JsonConvert.SerializeObject(webRequest.downloadHandler.text , Formatting.Indented);
-                Debug.Log("UpdateBet Response: " + formattedOutput);
+               // Debug.Log("UpdateBet Response: " + formattedOutput);
                 double cashAmount = double.Parse(updateBetResponse.new_wallet_balance);
                 new_wallet_balance = cashAmount;
                 isUpdated = true;

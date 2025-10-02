@@ -154,7 +154,7 @@ public class PayOutManager : MonoBehaviour
             winAmount = apiMan_.boulderCrushAPI.response.win_amount.ToString();
         }
         
-        payOut = NumberFormatter.FormatString(winAmount , 2, false);
+        payOut = PrecisionFormatter.culturedFormat(winAmount, 2);
         //Debug.Log(payOut);
         setWinAmount(payOut);
         textMan_.refreshWinText(payOut, winText);

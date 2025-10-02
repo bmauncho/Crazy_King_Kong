@@ -24,6 +24,7 @@ public class BetManager : MonoBehaviour
     void refresh ()
     {
         betAmount = BetAmounts [betIndex];
+        betAmount = PrecisionFormatter.culturedFormat(betAmount);
         textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
     }
 
@@ -35,7 +36,7 @@ public class BetManager : MonoBehaviour
             betIndex++;
             betAmount = BetAmounts [betIndex];
             betAmountUI.Bet_Amount.text = betAmount; // Update the UI text with the new bet amount
-            betAmount = NumberFormatter.FormatString(betAmount,1,false);
+            betAmount = PrecisionFormatter.culturedFormat (betAmount);
 
             textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
@@ -50,7 +51,7 @@ public class BetManager : MonoBehaviour
             betAmount = BetAmounts [betIndex];
             betAmountUI.Bet_Amount.text = betAmount; // Update the UI text with the new bet amount
 
-            betAmount = NumberFormatter.FormatString(betAmount, 1, false);
+            betAmount = PrecisionFormatter.culturedFormat(betAmount);
 
             textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");

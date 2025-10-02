@@ -38,7 +38,7 @@ public class SettingsUI : MonoBehaviour
                 IsOpen = false;
                 isTweening = false;
                 gameObject.SetActive(false);
-                Debug.Log("Settings Menu Closed");
+                //Debug.Log("Settings Menu Closed");
             }));
         }
         else
@@ -49,7 +49,7 @@ public class SettingsUI : MonoBehaviour
             {
                 IsOpen = true;
                 isTweening = false;
-                Debug.Log("Settings Menu Opened");
+               // Debug.Log("Settings Menu Opened");
             }));
         }
     }

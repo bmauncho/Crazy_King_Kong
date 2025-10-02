@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using UnityEngine;
 
 public class WinLoseManager : MonoBehaviour
@@ -47,7 +48,7 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator winSequence ()
     {
-        Debug.Log("Win - sequence!");
+       // Debug.Log("Win - sequence!");
         BoulderType currentWinBoulderType = boulderMan_.GetCurrentBoulderType();
         // 1. Return or hide the winning boulder
         boulderMan_.returnBoulderToPool();
@@ -59,9 +60,9 @@ public class WinLoseManager : MonoBehaviour
 
         if (CommandCenter.Instance.IsDemo())
         {
-            Debug.Log($"current winAmount{currencyMan_.CashAmount}");
+           // Debug.Log($"current winAmount{currencyMan_.CashAmount}");
             currencyMan_.updateCashAmount(payOutMan_.GetWinAmount().ToString());
-            Debug.Log($"new winAmount{currencyMan_.CashAmount}");
+          //  Debug.Log($"new winAmount{currencyMan_.CashAmount}");
         } 
         else
         {
@@ -69,7 +70,13 @@ public class WinLoseManager : MonoBehaviour
             apiMan_.updateBet.SetAmountWon(payOutMan_.GetWinAmount());
             apiMan_.updateBet.UpdateTheBet();
             yield return new WaitUntil(() => apiMan_.updateBet.isUpdated);
-            currencyMan_.updateCashAmount(apiMan_.updateBet.new_wallet_balance.ToString());
+            string updateBalance = apiMan_.updateBet.updateBetResponse.new_wallet_balance;
+           // Debug.Log($"update balance: {updateBalance}");
+            //double balance = apiMan_.updateBet.new_wallet_balance;
+            //Debug.Log($"Raw double value: {balance}");
+            //string newWalletBalance = apiMan_.updateBet.new_wallet_balance.ToString(CultureInfo.InvariantCulture);
+            //Debug.Log($"new Amount {newWalletBalance}");
+            currencyMan_.updateCashAmount(updateBalance);
         }
 
 

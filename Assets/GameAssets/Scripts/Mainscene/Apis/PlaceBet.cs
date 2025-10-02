@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections;
+using System.Globalization;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -66,7 +67,7 @@ public class PlaceBet : MonoBehaviour
     }
     private void configureIds ()
     {
-        Debug.Log("configure - " + GetType().Name);
+       // Debug.Log("configure - " + GetType().Name);
         Player_Id = GameManager.Instance.GetPlayerId();
         Game_Id = GameManager.Instance.GetGameId();
         Client_id = GameManager.Instance.GetClientId();
@@ -97,7 +98,7 @@ public class PlaceBet : MonoBehaviour
             client_id = Client_id
         };
         string jsonData = JsonUtility.ToJson(betRequest , true);
-        Debug.Log("place bet payload " + jsonData);
+        //Debug.Log("place bet payload " + jsonData);
         GameManager.Instance.ShowTransaction(bet_id);
         StartCoroutine(placeBet(jsonData));
     }
@@ -123,13 +124,12 @@ public class PlaceBet : MonoBehaviour
                 string responseText = webRequest.downloadHandler.text;
                 betResponse = JsonUtility.FromJson<BetResponse>(responseText);
                 string formattedOutput = JsonConvert.SerializeObject(webRequest.downloadHandler.text , Formatting.Indented);
-                Debug.Log($"Bet placed successfully:{formattedOutput}");
+                //Debug.Log($"Bet placed successfully:{formattedOutput}");
                 double CashAmount = betResponse.new_wallet_balance;
                 IsDone = true;
 
-                currencyMan_.CashAmount = (double)betResponse.new_wallet_balance;
-                string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+                currencyMan_.CashAmount = CashAmount;
+                string CASHAMOUNT = CashAmount.ToString("n2");
                 textMan_.refreshWalletText(CASHAMOUNT , currencyMan_.walletAmountText);
             }
         }

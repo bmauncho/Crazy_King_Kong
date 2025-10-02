@@ -54,7 +54,7 @@ public class CommandCenter : MonoBehaviour
 
     void CheckifGameIsReady ()
     {
-        Debug.Log("IsReady!");
+        //Debug.Log("IsReady!");
     }
 
     public void SetGameMode ( GameMode mode )

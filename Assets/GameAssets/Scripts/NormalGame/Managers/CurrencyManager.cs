@@ -31,20 +31,16 @@ public class CurrencyManager : MonoBehaviour
             {
                 CashAmount = 2000;
                 string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+                CASHAMOUNT = PrecisionFormatter.culturedFormat(CASHAMOUNT,2);
                 textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             }
             else
             {
-                string cashamount = GameManager.Instance.GetCashAmount();
-                if (double.TryParse(cashamount , out double amount))
-                {
-                    CashAmount += amount;
-                }
-
-                string CASHAMOUNT = CashAmount.ToString();
-                CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
-                textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
+                string cashAmount = GameManager.Instance.GetCashAmount();
+                CashAmount = double.Parse(cashAmount);
+                cashAmount = PrecisionFormatter.culturedFormat(cashAmount,2);
+                //Debug.Log($"cashAMount : {cashAmount}");
+                textManager_.refreshWalletText(cashAmount , walletAmountText);
             }
         }
 
@@ -65,9 +61,13 @@ public class CurrencyManager : MonoBehaviour
             {
                 Debug.LogWarning($"Invalid bet amount: {betAmount}");
             }
+            //string CASHAMOUNT = CashAmount.ToString();
+            //CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+            //textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
             string CASHAMOUNT = CashAmount.ToString();
-            CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
+            CASHAMOUNT = PrecisionFormatter.culturedFormat(CASHAMOUNT, 2);
             textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
+            Debug.Log($"cashAMount : {CASHAMOUNT}");
         }
         else
         {
@@ -96,10 +96,11 @@ public class CurrencyManager : MonoBehaviour
         }
         else
         {
-            if (double.TryParse(totalWininings , out double winnings))
-            {
-                CashAmount = winnings;
-            }
+            //if (double.TryParse(totalWininings , out double winnings))
+            //{
+            //    CashAmount = winnings;
+            //}
+            CashAmount = double.Parse(totalWininings,CultureInfo.InvariantCulture);
         }
 
         if (CashAmount <= 0)
@@ -107,9 +108,13 @@ public class CurrencyManager : MonoBehaviour
             CashAmount = 0;
         }
 
-        string CASHAMOUNT = CashAmount.ToString();
-        CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2, true);
+        //Debug.Log(CashAmount);
+
+        string CASHAMOUNT = CashAmount.ToString("n2");
+       // Debug.Log(CASHAMOUNT);
+        //CASHAMOUNT = PrecisionFormatter.culturedFormat(CASHAMOUNT, 2);
         textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
+        //Debug.Log($"cashAMount : {CASHAMOUNT}");
     }
 
 

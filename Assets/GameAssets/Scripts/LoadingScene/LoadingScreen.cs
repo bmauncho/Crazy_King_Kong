@@ -121,16 +121,16 @@ public class LoadingScreen : MonoBehaviour
                 Activate();
             }
 
-            Debug.Log($"loading Addressable...Done ");
+            //Debug.Log($"loading Addressable...Done ");
             yield return new WaitUntil(() => isSceneReady);
 
-            Debug.Log($"isSceneReady: {isSceneReady}");
+            //Debug.Log($"isSceneReady: {isSceneReady}");
 
             GameManager.Instance.FetchConfigData();
 
             yield return new WaitUntil(() => GameManager.Instance.IsDataFetched());
             if (isTest) yield break;
-            Debug.Log($"isDataFetched : {GameManager.Instance.IsDataFetched()}");
+           // Debug.Log($"isDataFetched : {GameManager.Instance.IsDataFetched()}");
             handle.Result.ActivateAsync();
             ConfigMan.Instance.TheDebugObj.SetActive(false);
             yield return new WaitForSeconds(0.5f);
@@ -138,7 +138,7 @@ public class LoadingScreen : MonoBehaviour
         }
         else
         {
-            Debug.Log("loading Scene!");
+            //Debug.Log("loading Scene!");
             AsyncOperation handle = SceneManager.LoadSceneAsync("MainScene" , LoadSceneMode.Additive);
             handle.allowSceneActivation = false;
 

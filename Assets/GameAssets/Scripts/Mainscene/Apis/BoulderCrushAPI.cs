@@ -82,7 +82,7 @@ public class BoulderCrushAPI : MonoBehaviour
         };
 
         string jsonData = JsonConvert.SerializeObject(request , settings);
-        Debug.Log($"Smash api request:{jsonData}");
+        //Debug.Log($"Smash api request:{jsonData}");
         StartCoroutine(crushApi(jsonData));
     }
 
@@ -108,7 +108,7 @@ public class BoulderCrushAPI : MonoBehaviour
                 response = JsonConvert.DeserializeObject<BoulderCrushResponse>(responseText);
                 var parsedJson = JToken.Parse(responseText);
                 string formattedOutput = JsonConvert.SerializeObject(parsedJson , Formatting.Indented);
-                Debug.Log($"smash api response:{formattedOutput}");
+                //Debug.Log($"smash api response:{formattedOutput}");
                 IsDone = true;
             }
         }
