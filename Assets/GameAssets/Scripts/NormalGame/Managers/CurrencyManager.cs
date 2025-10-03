@@ -73,7 +73,7 @@ public class CurrencyManager : MonoBehaviour
         {
             //PlaceBet
             apiMan_.placeBet.Bet();
-            //yield return new WaitUntil(() => apiMan_.placeBet.IsDone);
+            yield return new WaitUntil(() => apiMan_.placeBet.IsDone);
             //CashAmount = (double)apiMan_.placeBet.betResponse.new_wallet_balance;
             //string CASHAMOUNT = CashAmount.ToString();
             //CASHAMOUNT = NumberFormatter.FormatString(CASHAMOUNT , 2 , true);
