@@ -50,7 +50,7 @@ public class BonusApi : MonoBehaviour
         var settings = new JsonSerializerSettings();
         settings.Converters.Add(new FloatTrimConverter());
         settings.Formatting = Formatting.Indented;
-
+        apiMan_.SetBetId();
         string betAmountString = apiMan_.GetBetAmountValue();
         float betAmount = 0;
 
