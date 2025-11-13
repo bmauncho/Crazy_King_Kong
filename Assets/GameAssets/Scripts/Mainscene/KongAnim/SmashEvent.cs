@@ -25,6 +25,17 @@ public class SmashEvent : MonoBehaviour
         //Debug.Log("play - hit effect");
         //baulder hit effect depending if its a win or a lose
         //crack effet / lose effect
+
+        if(gameplayMan == null)
+        {
+            gameplayMan = CommandCenter.Instance.gamePlayManager_;
+        }
+
+        if(winLoseMan == null)
+        {
+            winLoseMan = CommandCenter.Instance.winLoseManager_;
+        }
+
         bool isWin = gameplayMan.canWin;
         if (isWin)
         {

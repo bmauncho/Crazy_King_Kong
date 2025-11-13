@@ -98,6 +98,11 @@ public class GameManager : MonoBehaviour
                 playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
                 CashAmount = playerInfo.wallet_balance;
                 isDataFetched = true;
+                CommandCenter.Instance.SetGameMode(GameMode.Live);
+                CommandCenter.Instance.apiManager_.InitializeApiManager();
+                CommandCenter.Instance.apiManager_.SetUp();
+                CommandCenter.Instance.currencyManager_.updateCashAmount(CashAmount);
+                CommandCenter.Instance.apiManager_.placeBet.configureIds();
             }
             else
             {
@@ -107,6 +112,7 @@ public class GameManager : MonoBehaviour
                 PromptManager.Instance.ShowErrorPrompt(
                     www.responseCode.ToString() , 
                     www.result.ToString() + www.error.ToString());
+                CommandCenter.Instance.SetGameMode(GameMode.Demo);
             }
         }
     }

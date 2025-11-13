@@ -46,10 +46,10 @@ public class CommandCenter : MonoBehaviour
         }
     }
 
-    void SetUp ()
+    public void SetUp ()
     {
         gameMode = GameManager.Instance.IsDemo() ? GameMode.Demo : GameMode.Live;
-        bool isDemo = GameManager.Instance.IsDemo() ? true : false;
+        //bool isDemo = GameManager.Instance.IsDemo() ? true : false;
     }
 
     void CheckifGameIsReady ()

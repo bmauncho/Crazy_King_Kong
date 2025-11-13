@@ -63,9 +63,8 @@ public class PlaceBet : MonoBehaviour
         betManager_ = CommandCenter.Instance.betManager_;
         currencyMan_ = CommandCenter.Instance.currencyManager_;
         textMan_ = CommandCenter.Instance.textManager_;
-        configureIds();
     }
-    private void configureIds ()
+    public void configureIds ()
     {
        // Debug.Log("configure - " + GetType().Name);
         Player_Id = GameManager.Instance.GetPlayerId();

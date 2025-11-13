@@ -88,7 +88,9 @@ public class BoulderCrushAPI : MonoBehaviour
 
     private IEnumerator crushApi (string jsonData)
     {
-        string ApiUrl = apiMan_.GetBaseUrl() + "/crush/crazykingkong";
+        string updatedUrl = "https://b.games.ibibe";
+        string originalUrl = apiMan_.GetBaseUrl();
+        string ApiUrl =  updatedUrl + "/crush/crazykingkong";
         using (UnityWebRequest webRequest = new UnityWebRequest(ApiUrl , "POST"))
         {
             byte [] bodyRaw = Encoding.UTF8.GetBytes(jsonData);

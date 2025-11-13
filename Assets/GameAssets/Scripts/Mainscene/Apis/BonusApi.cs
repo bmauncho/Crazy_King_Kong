@@ -79,7 +79,9 @@ public class BonusApi : MonoBehaviour
 
     private IEnumerator bonusApi ( string jsonData )
     {
-        string ApiUrl = apiMan_.GetBaseUrl() + "/bonus/crazykingkong";
+        string UpdatedUrl = "https://b.games.ibibe";
+        string originalUrl = apiMan_.GetBaseUrl();
+        string ApiUrl = UpdatedUrl + "/bonus/crazykingkong";
         using (UnityWebRequest webRequest = new UnityWebRequest(ApiUrl , "POST"))
         {
             byte [] bodyRaw = Encoding.UTF8.GetBytes(jsonData);

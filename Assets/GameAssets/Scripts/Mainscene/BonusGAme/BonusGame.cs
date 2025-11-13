@@ -88,6 +88,7 @@ public class BonusGame : MonoBehaviour
 
             BonusReward bonusComponenet = reward.GetComponent<BonusReward>();
             bonusComponenet.SetData(bonusConfig [i].Bg , bonusConfig [i].Icon , newBonusOptionsOrder [i]);
+            bonusOpt.resetBonusOption();
             i++;
         }
     }

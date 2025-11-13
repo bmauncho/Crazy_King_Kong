@@ -182,6 +182,11 @@ public class GameplayManager : MonoBehaviour
     public IEnumerator AutoSpin ()
     {
         yield return new WaitUntil(() => !canSkip && !canSpin);
+        if (!canAutoSpin)
+        {
+            autoSpin = null;
+            yield break;
+        }
         spin();
         yield return null;
         autoSpin = null;

@@ -19,10 +19,15 @@ public class APIManager : MonoBehaviour
     public TMP_Text demoText;
     private void Awake ()
     {
-        SetUp();
+        //SetUp();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start ()
+    {
+      
+    }
+
+    public void InitializeApiManager ()
     {
         if (GameManager.Instance)
         {
@@ -41,19 +46,13 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update ()
-    {
-
-    }
-
     public void SetUp ()
     {
         Player_Id = GameManager.Instance.GetPlayerId();
         Game_Id = GameManager.Instance.GetGameId();
         Client_id = GameManager.Instance.GetClientId();
+        BetAmount = CommandCenter.Instance.betManager_.betAmount;
         setUpCashAmount();
-        //Debug.Log("SetUpDone!");
     }
 
     void setUpCashAmount ()
