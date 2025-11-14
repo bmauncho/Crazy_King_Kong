@@ -156,7 +156,7 @@ public class TextManager : MonoBehaviour
     {
         TextInfo info = TextInfo(TextType.BetText);
         int index = info.spriteAsset.GetSpriteIndexFromName("UI_Bet1_FNT_4");
-        Debug.Log("Index test: " + index);
+       // Debug.Log("Index test: " + index);
 
     }
 }

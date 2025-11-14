@@ -31,7 +31,7 @@ public class CommandCenter : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Debug.Log("This is extra!");
+            //Debug.Log("This is extra!");
             Destroy(gameObject); // Ensures only one instance exists
         }
         else

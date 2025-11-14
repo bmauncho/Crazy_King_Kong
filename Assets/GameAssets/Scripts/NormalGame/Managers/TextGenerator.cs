@@ -85,7 +85,7 @@ public static class TextGenerator
                 else
                 {
                     result += character;
-                    Debug.Log("result " + result);
+                    //Debug.Log("result " + result);
                 }
             }
         }

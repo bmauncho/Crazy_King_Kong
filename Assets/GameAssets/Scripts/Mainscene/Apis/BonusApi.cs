@@ -73,7 +73,7 @@ public class BonusApi : MonoBehaviour
 
 
         string jsonData = JsonConvert.SerializeObject(request , settings);
-        Debug.Log($"Bonus api request:{jsonData}");
+        //Debug.Log($"Bonus api request:{jsonData}");
         StartCoroutine(bonusApi(jsonData));
     }
 
@@ -101,7 +101,7 @@ public class BonusApi : MonoBehaviour
                 response = JsonConvert.DeserializeObject<BonusApiResponse>(responseText);
                 var parsedJson = JToken.Parse(responseText);
                 string formattedOutput = JsonConvert.SerializeObject(parsedJson , Formatting.Indented);
-                Debug.Log($"Bonus api response:{formattedOutput}");
+                //Debug.Log($"Bonus api response:{formattedOutput}");
                 IsDone = true;
             }
         }

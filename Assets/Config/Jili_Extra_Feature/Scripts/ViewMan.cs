@@ -118,12 +118,12 @@ public class ViewMan : MonoBehaviour
        NewScaleMultiplier = (ScaleMultiplier.x / ScaleMultiplier.y);
         if (NewScaleMultiplier > SwitchViewValue)
         {
-            Debug.Log("IsPotrait");
+            //Debug.Log("IsPotrait");
             return false;
         }
         else
         {
-            Debug.Log("IsLandscape");
+            //Debug.Log("IsLandscape");
             return true;
         }
     }

@@ -67,7 +67,7 @@ public class CurrencyManager : MonoBehaviour
             string CASHAMOUNT = CashAmount.ToString();
             CASHAMOUNT = PrecisionFormatter.culturedFormat(CASHAMOUNT, 2);
             textManager_.refreshWalletText(CASHAMOUNT , walletAmountText);
-            Debug.Log($"cashAMount : {CASHAMOUNT}");
+            //Debug.Log($"cashAMount : {CASHAMOUNT}");
         }
         else
         {

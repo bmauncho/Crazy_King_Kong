@@ -50,7 +50,7 @@ public class BonusGameWinUI : MonoBehaviour
 
     public IEnumerator showWinAmount (BonusOptions bonusOptions)
     {
-        Debug.Log("BonusPayOut!");
+        //Debug.Log("BonusPayOut!");
         ShowWinUi();
 
         var canvasGroup = winUIContent.GetComponent<CanvasGroup>();

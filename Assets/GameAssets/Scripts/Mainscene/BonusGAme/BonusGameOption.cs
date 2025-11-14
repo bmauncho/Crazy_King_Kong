@@ -106,7 +106,7 @@ public class BonusGameOption : MonoBehaviour
 
     public void resetBonusOption ()
     {
-        Debug.Log("Reset Bonus Option");
+       // Debug.Log("Reset Bonus Option");
         BonusItem.SetActive(true);
         GlowAnim.SetActive(true);
     }

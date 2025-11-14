@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
             Instance = this;
         }
     }

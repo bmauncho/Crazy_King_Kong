@@ -31,18 +31,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake ()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start ()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
         Instance = this;
     }
 
     public void FetchConfigData ()
     {
-        //Debug.Log("FetchingConfig");
+        Debug.Log("FetchingConfig");
         if (ConfigMan.Instance.ReceivedConfigs)
         {
             if (!string.IsNullOrEmpty(ConfigMan.Instance.PlayerId))
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         {
             //Debug.Log($"is Demo {ConfigMan.Instance.IsDemo}");
             isDemo = ConfigMan.Instance.IsDemo;
-            FetchPlayerInfo();
+            //FetchPlayerInfo();
         }
     }
 
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 isDataFetched = true;
-                Debug.Log("Error: " + www.error);
+                //Debug.Log("Error: " + www.error);
                 CashAmount = "2000";
                 PromptManager.Instance.ShowErrorPrompt(
                     www.responseCode.ToString() , 
