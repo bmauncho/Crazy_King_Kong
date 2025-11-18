@@ -84,14 +84,14 @@ public class FetchUserInfo : MonoBehaviour
             Debug.Log("Utc_" + utcTime.ToString());
             //DateTime localTime = utcTime.ToLocalTime();
             TimeZoneInfo localZone = TimeZoneInfo.Local;
-            DateTime localTime =TimeZoneInfo.ConvertTimeFromUtc(utcTime,localZone);
+            DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime , localZone);
             Debug.Log("Local Time: " + localTime.ToString());
 
             double timediff = GetTimeElapsed(localTime).TotalSeconds;
             Debug.Log("Elapsed_" + timediff);
-            if (timediff > (60 * 10))
+            if (timediff > ( 60 * 10 ))
             {
-               // Debug.Log("ShouldQuit");
+                // Debug.Log("ShouldQuit");
                 configMan.ExpiredSessionObj.SetActive(true);
                 //Application.Quit();
             }
