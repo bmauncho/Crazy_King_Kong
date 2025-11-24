@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
                 CommandCenter.Instance.apiManager_.SetUp();
                 CommandCenter.Instance.currencyManager_.updateCashAmount(CashAmount);
                 CommandCenter.Instance.apiManager_.placeBet.configureIds();
+                CommandCenter.Instance.betManager_.SetUp();
             }
             else
             {

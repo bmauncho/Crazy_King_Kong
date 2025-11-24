@@ -12,13 +12,22 @@ public class BetManager : MonoBehaviour
     void Start ()
     {
         textManager_ = CommandCenter.Instance.textManager_;
-        refresh();
     }
 
     // Update is called once per frame
     void Update ()
     {
 
+    }
+
+    public void SetUp ()
+    {
+        if(CommandCenter.Instance != null && CommandCenter.Instance.gameMode == GameMode.Live)
+        {
+            BetAmounts = ConfigMan.Instance.BetValues;
+        }
+
+        refresh();
     }
 
     void refresh ()
