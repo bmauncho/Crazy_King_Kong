@@ -24,7 +24,10 @@ public class BetManager : MonoBehaviour
     {
         if(CommandCenter.Instance != null && CommandCenter.Instance.gameMode == GameMode.Live)
         {
-            BetAmounts = ConfigMan.Instance.BetValues;
+            if(ConfigMan.Instance.BetValues != null || ConfigMan.Instance.BetValues.Length > 0)
+            {
+                BetAmounts = ConfigMan.Instance.BetValues;
+            }
         }
 
         refresh();
