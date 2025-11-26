@@ -22,6 +22,8 @@ public class GameplayManager : MonoBehaviour
 
     public BonusGame bonusGame;
 
+    private Coroutine smashCoroutine;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,7 +66,7 @@ public class GameplayManager : MonoBehaviour
             return;
         }
 
-        if (!canSpin)
+        if (!canSpin && !canSkip)
         {
             EnableSpin();
         }
@@ -75,7 +77,7 @@ public class GameplayManager : MonoBehaviour
             canWin = winLoseMan_.CanWin();
             canShowBonusGame = winLoseMan_.CanShowBonusGame(canWin);
         }
-
+        Debug.Log("Spin");
         StartCoroutine(smash());
     }
 
@@ -110,7 +112,7 @@ public class GameplayManager : MonoBehaviour
             return;
         }
 
-        if (!canSkip)
+        if (!canSkip && !canSpin)
         {
             EnableSkip();
         }
@@ -123,7 +125,6 @@ public class GameplayManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.25f);
         CommandCenter.Instance.boulderManager_.SkipBoulder();
-
     }
 
     public void ToggleSettings ()
@@ -144,6 +145,7 @@ public class GameplayManager : MonoBehaviour
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
             StartAutospinSequence();
             DisableButtons();
+            Debug.Log("Enabled AutoSpin");
         }
         else
         {
@@ -151,6 +153,7 @@ public class GameplayManager : MonoBehaviour
             StopAutoSpinSequence();
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
             EnableButtons();
+            Debug.Log("Disable AutoSpin");
         }
     }
 
@@ -181,7 +184,7 @@ public class GameplayManager : MonoBehaviour
 
     public IEnumerator AutoSpin ()
     {
-        yield return new WaitUntil(() => !canSkip && !canSpin);
+        yield return new WaitUntil(() => !canSkip && !canSpin && !canShowBonusGame);
         if (!canAutoSpin)
         {
             autoSpin = null;

@@ -12,6 +12,7 @@ public class BetManager : MonoBehaviour
     void Start ()
     {
         textManager_ = CommandCenter.Instance.textManager_;
+        SetUp();
     }
 
     // Update is called once per frame
@@ -22,11 +23,18 @@ public class BetManager : MonoBehaviour
 
     public void SetUp ()
     {
-        if(CommandCenter.Instance != null && CommandCenter.Instance.gameMode == GameMode.Live)
+        if(CommandCenter.Instance != null)
         {
-            if(ConfigMan.Instance.BetValues != null || ConfigMan.Instance.BetValues.Length > 0)
+            if (ConfigMan.Instance)
             {
-                BetAmounts = ConfigMan.Instance.BetValues;
+                if (ConfigMan.Instance.BetValues == null || ConfigMan.Instance.BetValues.Length <= 0)
+                {
+                    //Debug.Log("call");
+                }
+                else
+                {
+                    BetAmounts = ConfigMan.Instance.BetValues;
+                }
             }
         }
 
@@ -35,6 +43,7 @@ public class BetManager : MonoBehaviour
 
     void refresh ()
     {
+        //Debug.Log("refresh");
         betAmount = BetAmounts [betIndex];
         betAmount = PrecisionFormatter.culturedFormat(betAmount);
         textManager_.refreshBetText(betAmount , betAmountUI.Bet_Amount);

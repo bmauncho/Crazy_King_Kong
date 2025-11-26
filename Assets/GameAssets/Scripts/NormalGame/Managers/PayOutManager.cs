@@ -65,7 +65,7 @@ public class PayOutManager : MonoBehaviour
     public double calculatePayOut (BoulderType Type,double spinsToCrush)
     {
         // payout = Bet * (probabilites * expectedMultiplier);
-        Debug.Log($"BoulderType - {Type.ToString()}");
+        //Debug.Log($"BoulderType - {Type.ToString()}");
         string betAmount = betMan_.betAmount;
 
         double Bet = 1;

@@ -71,14 +71,15 @@ public class PlaceBet : MonoBehaviour
         Game_Id = GameManager.Instance.GetGameId();
         Client_id = GameManager.Instance.GetClientId();
         apiMan_.SetBetId();
+        BetAmount = float.Parse(betManager_.betAmount);
+        //bet_id = apiMan_.GetBetId();
     }
     // Update is called once per frame
     void Update ()
     {
         if (CommandCenter.Instance)
         {
-            BetAmount =  CommandCenter.Instance.gameType == GameType.Base ? float.Parse(betManager_.betAmount): 0;
-            bet_id = apiMan_.GetBetId();
+            
         }
     }
     [ContextMenu("Place Bet")]
@@ -87,6 +88,7 @@ public class PlaceBet : MonoBehaviour
         IsDone = false;
         apiMan_.SetBetId();
         bet_id = apiMan_.GetBetId();
+        BetAmount = float.Parse(betManager_.betAmount);
         apiMan_.SetBetAmount(BetAmount.ToString());
         BetRequest betRequest = new BetRequest
         {

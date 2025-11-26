@@ -24,39 +24,38 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public GameObject ButtonGlow;
 
     [Header("Events")]
-    public UnityEvent onClick;
+    public UnityEvent onClick; // Only triggers this button, instance-specific
 
     private Image buttonNormalImage;
     private Image buttonGlowImage;
 
     private Sprite normalGlow;
     private bool isPointerDown = false;
-    [SerializeField]private bool lastInteractableValue;
+    [SerializeField] private bool lastInteractableValue;
+
+    private float lastUpTime = 0f;
+    private float lastDownTime = 0f;
 
     private void Awake ()
     {
+        //  Ensure we only cache this instance's images
         if (ButtonNormal != null)
             buttonNormalImage = ButtonNormal.GetComponent<Image>();
         else
-            Debug.LogWarning("ButtonNormal GameObject not assigned.");
+            Debug.LogWarning($"ButtonNormal not assigned on {name}"); //  added warning
 
         if (ButtonGlow != null)
             buttonGlowImage = ButtonGlow.GetComponent<Image>();
         else
-            Debug.LogWarning("ButtonGlow GameObject not assigned.");
+            Debug.LogWarning($"ButtonGlow not assigned on {name}"); //  added warning
 
         if (buttonGlowImage != null)
             normalGlow = buttonGlowImage.sprite;
 
         HandleInteractableChanged(isInteractable);
         SetToggleState(toggledOn);
-        lastInteractableValue = !isInteractable;
-    }
 
-    private void Start ()
-    {
-        HandleInteractableChanged(isInteractable);
-        SetToggleState(toggledOn);
+        lastInteractableValue = !isInteractable;
     }
 
     private void Update ()
@@ -70,31 +69,39 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     public void OnPointerDown ( PointerEventData eventData )
     {
+        if (Time.unscaledTime - lastDownTime < 0.1f) return;
+        lastDownTime = Time.unscaledTime;
+
         if (!isInteractable) return;
+
         isPointerDown = true;
 
-        if (isToggle)
-            HandleTogglePointerDown();
-        else
-            HandleNormalPointerDown();
+        if (isToggle) HandleTogglePointerDown();
+        else HandleNormalPointerDown();
     }
 
     public void OnPointerUp ( PointerEventData eventData )
     {
+        if (Time.unscaledTime - lastUpTime < 0.1f) return;
+        lastUpTime = Time.unscaledTime;
+
         if (!isInteractable) return;
 
+        //  Only toggle this button
         if (isToggle)
         {
             toggledOn = !toggledOn;
-            HandleToggleOnPointerUp();
+            UpdateToggleVisuals(); //  Updated visuals only for this button
         }
         else if (!isPersistentGlow)
         {
-            ButtonGlow?.SetActive(false);
+            ButtonGlow?.SetActive(false); //  Affects only this button
             ButtonNormal?.SetActive(true);
         }
 
+        // Critical fix: only invoke this button's onClick
         onClick?.Invoke();
+
         isPointerDown = false;
     }
 
@@ -105,11 +112,11 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         if (buttonGlowImage != null)
             buttonGlowImage.sprite = toggledOn ? normalGlow : toggleGlowSprite;
 
+        // Only affects this button's GameObjects
         ButtonGlow?.SetActive(true);
         ButtonNormal?.SetActive(false);
 
-        // Optional: animate glow (requires DOTween)
-         ButtonGlow.transform.DOScale(Vector3.one * 1.1f, 0.15f).SetEase(Ease.OutBack);
+        ButtonGlow.transform.DOScale(Vector3.one * 1.1f , 0.15f).SetEase(Ease.OutBack);
     }
 
     private void HandleNormalPointerDown ()
@@ -128,58 +135,28 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
             ButtonNormal.SetActive(false);
         }
 
-        // Optional: animate glow
-         ButtonGlow.transform.DOScale(Vector3.one * 1.1f, 0.15f).SetEase(Ease.OutBack);
+        ButtonGlow.transform.DOScale(Vector3.one * 1.1f , 0.15f).SetEase(Ease.OutBack);
     }
 
     private void HandleInteractableChanged ( bool newValue )
     {
-        if (buttonNormalImage != null)
-        {
-            if (!isToggle)
-            {
-                buttonNormalImage.sprite = newValue ? normalsprite : baseSprite;
-            }
-        }
-        ButtonGlow?.SetActive(false);
-        ButtonNormal?.SetActive(true);
-    }
+        if (buttonNormalImage != null && !isToggle)
+            buttonNormalImage.sprite = newValue ? normalsprite : baseSprite;
 
-    public void HandleToggleOnPointerUp ()
-    {
-        if (buttonNormalImage != null)
-        {
-            if (toggledOn)
-            {
-                buttonNormalImage.sprite = normalsprite;
-            }
-            else
-            {
-                buttonNormalImage.sprite = toggledSprite;
-            }
-        }
-
+        // Only affects this button
         ButtonGlow?.SetActive(false);
         ButtonNormal?.SetActive(true);
     }
 
     private void UpdateToggleVisuals ()
     {
-  
         if (buttonNormalImage != null)
         {
-            if (toggledOn)
-            {
-                //Debug.Log("UpdateToggleVisuals -- on");
-                buttonNormalImage.sprite = normalsprite;
-            }
-            else
-            {
-                //Debug.Log("UpdateToggleVisuals -- off");
-                buttonNormalImage.sprite = toggledSprite;
-            }
+            // Only update this instance
+            buttonNormalImage.sprite = toggledOn ? normalsprite : toggledSprite;
         }
 
+        //  Only affects this button's visuals
         ButtonGlow?.SetActive(false);
         ButtonNormal?.SetActive(true);
     }
@@ -189,7 +166,7 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public void SetToggleState ( bool value )
     {
         toggledOn = value;
-        UpdateToggleVisuals();
+        UpdateToggleVisuals(); // Only updates this button
     }
 
     [ContextMenu("Test - Interactable Off")]

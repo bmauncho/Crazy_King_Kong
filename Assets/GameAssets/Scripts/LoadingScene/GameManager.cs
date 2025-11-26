@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         {
             //Debug.Log($"is Demo {ConfigMan.Instance.IsDemo}");
             isDemo = ConfigMan.Instance.IsDemo;
-            //FetchPlayerInfo();
+            FetchPlayerInfo();
         }
     }
 
@@ -84,38 +84,47 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator _FetchPlayerInfo ( string url )
     {
-        using (UnityWebRequest www = UnityWebRequestHelper.GetWithTimestamp(url))
+        if (isDemo)
         {
-            www.useHttpContinue = false;
-            www.SetRequestHeader("Cache-Control" , "no-cache, no-store, must-revalidate");
-            www.SetRequestHeader("Pragma" , "no-cache");
-            www.SetRequestHeader("Expires" , "0");
-            yield return www.SendWebRequest();
+            CommandCenter.Instance.SetGameMode(GameMode.Demo);
+            CommandCenter.Instance.betManager_.SetUp();
+        }
+        else
+        {
+            using (UnityWebRequest www = UnityWebRequestHelper.GetWithTimestamp(url))
+            {
+                www.useHttpContinue = false;
+                www.SetRequestHeader("Cache-Control" , "no-cache, no-store, must-revalidate");
+                www.SetRequestHeader("Pragma" , "no-cache");
+                www.SetRequestHeader("Expires" , "0");
+                yield return www.SendWebRequest();
 
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
-                CashAmount = playerInfo.wallet_balance;
-                isDataFetched = true;
-                CommandCenter.Instance.SetGameMode(GameMode.Live);
-                CommandCenter.Instance.apiManager_.InitializeApiManager();
-                CommandCenter.Instance.apiManager_.SetUp();
-                CommandCenter.Instance.currencyManager_.updateCashAmount(CashAmount);
-                CommandCenter.Instance.apiManager_.placeBet.configureIds();
-                CommandCenter.Instance.betManager_.SetUp();
-            }
-            else
-            {
-                isDataFetched = true;
-                //Debug.Log("Error: " + www.error);
-                CashAmount = "2000";
-                PromptManager.Instance.ShowErrorPrompt(
-                    www.responseCode.ToString() , 
-                    www.result.ToString() + www.error.ToString());
-                CommandCenter.Instance.SetGameMode(GameMode.Demo);
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
+                    CashAmount = playerInfo.wallet_balance;
+                    isDataFetched = true;
+                    CommandCenter.Instance.SetGameMode(GameMode.Live);
+                    CommandCenter.Instance.apiManager_.InitializeApiManager();
+                    CommandCenter.Instance.apiManager_.SetUp();
+                    CommandCenter.Instance.currencyManager_.updateCashAmount(CashAmount);
+                    CommandCenter.Instance.betManager_.SetUp();
+                    CommandCenter.Instance.apiManager_.placeBet.configureIds();
+                }
+                else
+                {
+                    isDataFetched = true;
+                    //Debug.Log("Error: " + www.error);
+                    CashAmount = "2000";
+                    PromptManager.Instance.ShowErrorPrompt(
+                        www.responseCode.ToString() ,
+                        www.result.ToString() + www.error.ToString());
+                    CommandCenter.Instance.SetGameMode(GameMode.Demo);
+                }
             }
         }
+           
     }
 
     public void AddTransactionText ( TMP_Text theText )

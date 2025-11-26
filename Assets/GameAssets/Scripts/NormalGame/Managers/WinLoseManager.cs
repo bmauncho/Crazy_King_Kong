@@ -79,8 +79,6 @@ public class WinLoseManager : MonoBehaviour
             currencyMan_.updateCashAmount(updateBalance);
         }
 
-
-        gamePlayMan_.DisableSpin();
         // 4. Refresh boulders (wait for completion)
         yield return StartCoroutine(boulderMan_.skip.refreshBoulders());
         // 5. Enable spin or next round
@@ -91,6 +89,11 @@ public class WinLoseManager : MonoBehaviour
         yield return StartCoroutine(bonusUI.showBonusGameUI());
 
         yield return new WaitUntil(() => !gamePlayMan_.canShowBonusGame);
+
+        gamePlayMan_.DisableSpin();
+
+        yield return null;
+
 
         if (gamePlayMan_.canAutoSpin)
         {
@@ -106,7 +109,7 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator loseSequence (BoulderManager boulderMan)
     {
-        Debug.Log("lose - sequence!");
+       // Debug.Log("lose - sequence!");
         boulderMan.Boulder.GetComponent<Boulder>().crack();
         gamePlayMan_.DisableWin();
         yield return new WaitUntil(() => !boulderMan_.kongAnim.IsAnimating);
