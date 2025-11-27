@@ -26,6 +26,7 @@ public class CommandCenter : MonoBehaviour
     public PayOutManager payOutManager_;
     public SoundManager soundManager_;
     public APIManager apiManager_;
+    public SettingsUI settingsUI_;
 
     private void Awake ()
     {

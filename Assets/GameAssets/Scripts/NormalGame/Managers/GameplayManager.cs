@@ -16,7 +16,7 @@ public class GameplayManager : MonoBehaviour
     public bool canAutoSpin = false;
     public bool canShowBonusGame = false;
 
-    public ButtonController [] buttons;
+    public Button [] buttons;
     private Coroutine autoSpin;
     public double spins;
 
@@ -77,7 +77,7 @@ public class GameplayManager : MonoBehaviour
             canWin = winLoseMan_.CanWin();
             canShowBonusGame = winLoseMan_.CanShowBonusGame(canWin);
         }
-        Debug.Log("Spin");
+        //Debug.Log("Spin");
         StartCoroutine(smash());
     }
 
@@ -145,7 +145,7 @@ public class GameplayManager : MonoBehaviour
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
             StartAutospinSequence();
             DisableButtons();
-            Debug.Log("Enabled AutoSpin");
+            //Debug.Log("Enabled AutoSpin");
         }
         else
         {
@@ -153,7 +153,7 @@ public class GameplayManager : MonoBehaviour
             StopAutoSpinSequence();
             CommandCenter.Instance.soundManager_.PlaySound("UI_Voice3");
             EnableButtons();
-            Debug.Log("Disable AutoSpin");
+            //Debug.Log("Disable AutoSpin");
         }
     }
 
@@ -224,7 +224,7 @@ public class GameplayManager : MonoBehaviour
     {
         foreach(var button in buttons)
         {
-            button.isInteractable = true;
+            button.interactable = true;
         }
     }
 
@@ -232,7 +232,7 @@ public class GameplayManager : MonoBehaviour
     {
         foreach(var button in buttons)
         {
-            button.isInteractable = false;
+            button.interactable = false;
         }
     }
 
