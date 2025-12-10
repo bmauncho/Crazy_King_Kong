@@ -13,7 +13,7 @@ public class BoulderMovement : MonoBehaviour
     }
 
     public IEnumerator ShiftBouldersSmoothly (
-         int whichConfig ,
+         BoulderConfig config,
          Transform smashPosition ,
          Boulders boulders,
          SmashPosition smashPos,
@@ -23,7 +23,7 @@ public class BoulderMovement : MonoBehaviour
     {
         CommandCenter.Instance.soundManager_.PlaySound("UI_Voice12");
 
-        BoulderPos [] boulderPositions = boulders.boulderConfigs [whichConfig].ballPositions;
+        BoulderPos [] boulderPositions = config.ballPositions;
         int lastIndex = boulderPositions.Length - 1;
 
         // 1. Handle last boulder going to smash point
@@ -72,13 +72,13 @@ public class BoulderMovement : MonoBehaviour
         var bottom = boulderPositions [0];
         if (bottom.TheOwner == null)
         {
-            var spawner = boulders.boulderConfigs [whichConfig].spawner;
+            var spawner = config.spawner;
             var newBoulder = spawner.spawnBall();
             newBoulder.transform.SetParent(bottom.transform);
             BoulderSelection selection = CommandCenter.Instance.boulderManager_.selection;
-            BoulderTypeConfig config = selection.GetRandomBoulderTypeConfig();
-            newBoulder.GetComponent<Boulder>().SetBoulderType(config.type);
-            newBoulder.GetComponent<Boulder>().SetBoulderSprite(config.boulder);
+            BoulderTypeConfig theconfig = selection.GetRandomBoulderTypeConfig();
+            newBoulder.GetComponent<Boulder>().SetBoulderType(theconfig.type);
+            newBoulder.GetComponent<Boulder>().SetBoulderSprite(theconfig.boulder);
 
             Tween spawnTween = newBoulder.transform.DOMove(bottom.transform.position , moveDuration)
                 .SetEase(Ease.InQuad);

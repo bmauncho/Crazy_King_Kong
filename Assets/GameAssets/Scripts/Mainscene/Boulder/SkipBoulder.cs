@@ -41,8 +41,10 @@ public class SkipBoulder : MonoBehaviour
             poolMan_.ReturnToPool(PoolType.Boulder , smashPosOwner);
         }
 
+        yield return new WaitForSeconds(.1f);
+
         yield return StartCoroutine(boulderMan.movement.ShiftBouldersSmoothly(
-            whichConfig ,
+            config ,
             boulderMan.smashPos.transform ,
             boulderMan.boulders ,
             boulderMan.smashPos));
