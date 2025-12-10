@@ -32,6 +32,8 @@ public class BoulderManager : MonoBehaviour
 
     public GameObject Boulder;
 
+    public GameObject boulderPref;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -53,12 +55,13 @@ public class BoulderManager : MonoBehaviour
             {
                 if (pos.TheOwner == null)
                 {
-                    var boulder = poolMan_.GetFromPool(
-                        PoolType.Boulder ,
-                        pos.transform.position ,
-                        Quaternion.identity ,
-                        pos.transform);
+                    //var boulder = poolMan_.GetFromPool(
+                    //    PoolType.Boulder ,
+                    //    pos.transform.position ,
+                    //    Quaternion.identity ,
+                    //    pos.transform);
 
+                    var boulder = Instantiate(boulderPref , pos.transform.position , Quaternion.identity , pos.transform);
                     boulder.transform.localPosition = Vector3.zero;
 
                     pos.AddOwner(boulder);
@@ -103,7 +106,8 @@ public class BoulderManager : MonoBehaviour
     {
         Boulder boulder = Boulder.GetComponent<Boulder>();
         boulder.resetCrack();
-        poolMan_.ReturnToPool(PoolType.Boulder , Boulder);
+        //poolMan_.ReturnToPool(PoolType.Boulder , Boulder);
+        Destroy(boulder.gameObject);
     }
 
     public BoulderType GetCurrentBoulderType ()

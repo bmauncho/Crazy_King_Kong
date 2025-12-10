@@ -16851,6 +16851,7 @@ MonoBehaviour:
   selection: {fileID: 1834540281}
   IsSkip: 0
   Boulder: {fileID: 0}
+  boulderPref: {fileID: 7998637384985666873, guid: bba0354191566914086350a15a3de491, type: 3}
 --- !u!1 &1884109659
 GameObject:
   m_ObjectHideFlags: 0
