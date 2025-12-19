@@ -4,7 +4,7 @@ using UnityEngine;
 public class BetManager : MonoBehaviour
 {
     TextManager textManager_;
-    private string [] BetAmounts = { "0.5", "1" , "2" , "4" , "5" , "10" , "20" ,"25", "50" , "100" };
+    private string [] BetAmounts = { "5" , "10" , "20" ,"25", "50" , "100" };
     public int betIndex = 3;
     public string betAmount = "";
     public BetAmount betAmountUI;
